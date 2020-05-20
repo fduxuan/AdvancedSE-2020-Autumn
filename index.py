@@ -1,17 +1,15 @@
-# -*- coding: utf-8 -*-
-
 import logging
-HELLO_WORLD = b'Hello world!\n'
+import json
+import base64
 
-def handler(environ, start_response):
-    context = environ['fc.context']
-    request_uri = environ['fc.request_uri']
-    for k, v in environ.items():
-      if k.startswith('HTTP_'):
-        # process custom request headers
-        pass
-    # do something here
-    status = '200 OK'
-    response_headers = [('Content-type', 'text/plain')]
-    start_response(status, response_headers)
-    return [HELLO_WORLD]
+def handler(event, context):
+  request = json.loads(event)
+  logger = logging.getLogger()
+  content = "<h1>hello world</h1>".encode("utf-8")
+  api_rep = {
+    "isBase64Encoded":"true",
+    "statusCode":"200",
+    "headers":{"Content-Type":"text/html; charset=utf-8"},
+    "body":str(base64.b64encode(content),"utf-8")
+  }
+  return api_rep
