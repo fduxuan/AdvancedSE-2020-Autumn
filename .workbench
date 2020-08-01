@@ -4,6 +4,16 @@
       "apiUri": "/*",
       "fcHandler": "serverless.handler",
       "httpMethod": "ANY"
+    },
+    {
+      "apiUri": "/list",
+      "fcHandler": "list.handler",
+      "httpMethod": "GET"
+    },
+    {
+      "apiUri": "/detail/[id]",
+      "fcHandler": "detail.handler",
+      "httpMethod": "GET"
     }
   ],
   "cicd": {
