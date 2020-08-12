@@ -5,7 +5,7 @@ import base64
 def handler(event, context):
   request = json.loads(event)
   logger = logging.getLogger()
-  content = "<h1>Hello world</h1><a href='detail/200156'>看 Gallery 详情</a>"
+  content = "<h1>Hello world</h1><a href='api/detail/200156'>看 Gallery 详情</a>"
   api_rep = {
     "isBase64Encoded":"true",
     "statusCode":"200",
