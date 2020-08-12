@@ -7,12 +7,12 @@
     },
     {
       "apiUri": "/list",
-      "fcHandler": "list.handler",
+      "fcHandler": "/api/list.handler",
       "httpMethod": "GET"
     },
     {
       "apiUri": "/detail/[id]",
-      "fcHandler": "detail.handler",
+      "fcHandler": "/api/detail.handler",
       "httpMethod": "GET"
     }
   ],
