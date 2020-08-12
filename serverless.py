@@ -1,8 +1,8 @@
-SAFE = {
-  '/api' : True,
-  '/.workbench':True,
-  '/serverless.js':True
-}
+SAFE = [
+  '/api',
+  '/.workbench',
+  '/serverless.py'
+]
 MIME = {
     "323"     : "text/h323",
     "acx"     : "application/internet-property-stream",
