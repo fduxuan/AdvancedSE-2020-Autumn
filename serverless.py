@@ -1,10 +1,8 @@
-import os
-import base64
-import json
-import re
-import logging
-import importlib
-
+SAFE = {
+  '/api' : True,
+  '/.workbench':True,
+  '/serverless.js':True
+}
 MIME = {
     "323"     : "text/h323",
     "acx"     : "application/internet-property-stream",
@@ -213,6 +211,13 @@ MIME = {
     "pptx"    : "application/vnd.openxmlformats-officedocument.presentationml.presentation"
 }
 
+import os
+import base64
+import json
+import re
+import logging
+import importlib
+
 def handler(event, context):
 	request = json.loads(event)
 	console = logging.getLogger()
@@ -257,6 +262,12 @@ def handler(event, context):
 	print('fileExt: ' + fileExt)
 
 	if fileExt:
+
+		for v in pathArray:
+			if(v in SAFE):
+				print('STOP:' + v);
+				return htmlResponse
+
 		try:
 			fs = open(modulePath, 'rb')
 			data = fs.read()
