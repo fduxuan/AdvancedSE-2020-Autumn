@@ -28,8 +28,7 @@ def handler(event, context):
         },
         "body": "<h1>很抱歉，您要访问的页面不存在！</h1>"//返回值
     }
-    return responseObject;//返回结果
-}
+    return responseObject//返回结果
 ```
 - API 必须加入 serverless.py 的 SAFE 列表配置当中，避免泄漏
 
