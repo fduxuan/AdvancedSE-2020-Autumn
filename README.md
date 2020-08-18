@@ -18,17 +18,17 @@
 ```
 def handler(event, context):
     request = json.loads(event)// 请求内容都会存储在 event 中，JSON编码后可遍历查看具体的内容
-    // do sth
-    // 返回值格式
+    # do sth
+    # 返回值格式
     responseObject = {
-        "isBase64Encoded": "false",//与 body 内容是否进行 base64 编码保持一致
-        "statusCode": "404",//状态码，根据返回值自行决定适合的状态码
+        "isBase64Encoded": "false", # 与 body 内容是否进行 base64 编码保持一致
+        "statusCode": "404", # 状态码，根据返回值自行决定适合的状态码
         "headers": {
-        	"Content-type": "text/html; charset=utf-8"//根据返回值设置正确的 Content-type
+        	"Content-type": "text/html; charset=utf-8" # 根据返回值设置正确的 Content-type
         },
-        "body": "<h1>很抱歉，您要访问的页面不存在！</h1>"//返回值
+        "body": "<h1>很抱歉，您要访问的页面不存在！</h1>" # 返回值
     }
-    return responseObject//返回结果
+    return responseObject # 返回结果
 ```
 - API 必须加入 serverless.py 的 SAFE 列表配置当中，避免泄漏
 
