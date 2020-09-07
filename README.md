@@ -16,8 +16,10 @@
 - 建议在 CloudIDE 项目文件列表创建目录用于统一存放相关的 API
 - API 格式
 ```
+import json
+
 def handler(event, context):
-    request = json.loads(event)// 请求内容都会存储在 event 中，JSON编码后可遍历查看具体的内容
+    request = json.loads(event) # 请求内容都会存储在 event 中，JSON编码后可遍历查看具体的内容
     # do sth
     # 返回值格式
     responseObject = {
