@@ -10,6 +10,7 @@ SAFE = [
 
 import multiprocessing
 import gunicorn.app.base
+import requests_unixsocket
 import os
 import logging
 from django.core.wsgi import get_wsgi_application
