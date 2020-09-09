@@ -161,7 +161,7 @@ def handler(event, context):
       print('fileExt: ' + fileExt)
 
       if fileExt:
-
+        SAFE = serverless_config.SAFE
         for v in pathArray:
           if(v in SAFE):
             print('SAFE CHECK:' + v);
