@@ -14,13 +14,22 @@
 
 - serverless_config.py
   - 不可删除
+  - FRAMEWORK，如果是函数计算类型的API，请将该对象下所有属性值设置为 None
   - SAFE，不可访问扩展名的目录或文件配置入口。加入此列表的目录，代表该目录下所有的文件都不可通过扩展名进行访问；加入此列表的文件，也不能通过扩展名进行访问；
+
+- serverless_config_django.py
+  - 如果你的 Python 应用使用的是 django 框架，请将此文件重命名为 serverless_config.py
+  - FRAMEWORK，将 module 设置为您的 django 应用包名称
+
+- serverless_config_flask.py
+  - 如果你的 Python 应用使用的是 flask 框架，请将此文件重命名为 serverless_config.py
+  - FRAMEWORK，将 module 设置为您的 flask 应用入口文件名称，将 module.entry 设置为应用入口的应用对象
 
 - serverless.py
   - 不可删除
 
 ## 安装依赖
-- 打开依赖文件 requirements.txt，如果原 Python 项目有该文件，将原依赖项复制到该文件
+- 打开依赖文件 requirements.txt，如果原 Python 项目有该文件（比如之前是 django 或 flask 应用，需要将 django 或 flask 也加入到依赖列表），将原依赖项复制到该文件
 ```
 gunicorn
 requests_unixsocket
@@ -31,6 +40,22 @@ requests_unixsocket
 ```
 sudo pip install -r requirements.txt --target ./ -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
+
+- 设置 PYTHONPATH 环境变量
+  - 在 CloudIDE 的「终端」打开并编辑 bashrc
+  ```
+  $ vim ~/.bashrc
+  ```
+
+  - 将以下内容附加到文件末尾
+  ```
+  export PYTHONPATH=$PYTHONPATH:/你的工作空间地址
+  ```
+
+  - 重新加载 shell
+  ```
+  $ source ~/.bashrc
+  ```
 
 ## 创建静态应用
 - 将本地开发好的静态应用直接拖拽到 CloudIDE 项目文件列表即可
