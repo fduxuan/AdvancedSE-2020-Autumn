@@ -5,6 +5,13 @@
   - fcRouteDefault，「路由/函数入口」配置入口
   - cicd，构建打包部署应用的 Shell 指令集；核心：将要部署的内容全部打包到项目根目录的 code.zip 压缩包，云开发平台只认项目根目录的 code.zip 压缩包进行部署
 
+- requirements.txt
+  - 不可删除，依赖文件
+  - 需要打开 CloudIDE 的「终端」输入以下命令进行安装
+  ```
+    sudo pip install -r requirements.txt --target ./ -i https://pypi.tuna.tsinghua.edu.cn/simple
+  ```
+
 - serverless_config.py
   - 不可删除
   - SAFE，不可访问扩展名的目录或文件配置入口。加入此列表的目录，代表该目录下所有的文件都不可通过扩展名进行访问；加入此列表的文件，也不能通过扩展名进行访问；
@@ -13,10 +20,11 @@
   - 不可删除
 
 ## 安装依赖
-- 新建依赖文件 requirements.txt，如果原 Python 项目有该文件，则打开该文件，添加以下依赖项
+- 打开依赖文件 requirements.txt，如果原 Python 项目有该文件，将原依赖项复制到该文件
 ```
 gunicorn
 requests_unixsocket
+原应用依赖项添加到这里
 ```
 
 - 打开 CloudIDE 终端，执行以下命令，安装依赖
@@ -64,10 +72,11 @@ def handler(event, context):
 - 将存量 Python 应用拖拽上传到 CloudIDE 左侧文件列表，等待所有文件上传完成
 
 ## 安装依赖
-- 新建依赖文件 requirements.txt，如果原 Python 项目有该文件，则打开该文件，添加以下依赖项
+- 打开依赖文件 requirements.txt，如果原 Python 项目有该文件，将原依赖项复制到该文件
 ```
 gunicorn
 requests_unixsocket
+原应用依赖项添加到这里
 ```
 
 - 打开 CloudIDE 终端，执行以下命令，安装依赖
