@@ -8,7 +8,6 @@ import mimetypes
 from datetime import datetime
 import time
 import traceback
-import requests_unixsocket
 import serverless_config
 
 inited = False
