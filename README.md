@@ -6,8 +6,8 @@
   - cicd，构建打包部署应用的 Shell 指令集；核心：将要部署的内容全部打包到项目根目录的 code.zip 压缩包，云开发平台只认项目根目录的 code.zip 压缩包进行部署
 
 - requirements.txt
-  - 不可删除，依赖文件
-  - 需要打开 CloudIDE 的「终端」输入以下命令进行安装
+  - 配置项目依赖文件（如果有）
+  - 如果项目有依赖，则需要打开 CloudIDE 的「终端」输入以下命令进行安装，否则可以忽略此文件和下面的安装步骤
   ```
   sudo pip install -r requirements.txt --target ./ -i https://pypi.tuna.tsinghua.edu.cn/simple
   ```
@@ -26,38 +26,9 @@
   - FRAMEWORK，将 module 设置为您的 flask 应用入口文件名称，将 module.entry 设置为应用入口的应用对象
 
 - serverless.py
-  - 不可删除
+  - 不可删除，云开发平台Serverless框架文件
 
-## 安装依赖
-- 打开依赖文件 requirements.txt，如果原 Python 项目有该文件（比如之前是 django 或 flask 应用，需要将 django 或 flask 也加入到依赖列表），将原依赖项复制到该文件
-```
-gunicorn
-requests_unixsocket
-原应用依赖项添加到这里
-```
-
-- 打开 CloudIDE 终端，执行以下命令，安装依赖
-```
-sudo pip install -r requirements.txt --target ./ -i https://pypi.tuna.tsinghua.edu.cn/simple
-```
-
-- 设置 PYTHONPATH 环境变量
-  - 在 CloudIDE 的「终端」打开并编辑 bashrc
-  ```
-  $ vim ~/.bashrc
-  ```
-
-  - 将以下内容附加到文件末尾
-  ```
-  export PYTHONPATH=$PYTHONPATH:/你的工作空间地址
-  ```
-
-  - 重新加载 shell
-  ```
-  $ source ~/.bashrc
-  ```
-
-## 创建静态应用
+## 创建纯静态应用
 - 将本地开发好的静态应用直接拖拽到 CloudIDE 项目文件列表即可
 - 或者直接在 CloudIDE 项目文件列表创建
 
@@ -97,7 +68,7 @@ def handler(event, context):
 - 将存量 Python 应用拖拽上传到 CloudIDE 左侧文件列表，等待所有文件上传完成
 
 ## 安装依赖
-- 打开依赖文件 requirements.txt，如果原 Python 项目有该文件，将原依赖项复制到该文件
+- 打开依赖文件 requirements.txt，如果原 Python 项目有该文件（比如之前是 django 或 flask 应用，需要将 django 或 flask 也加入到依赖列表），将原依赖项复制到该文件
 ```
 gunicorn
 requests_unixsocket
@@ -108,6 +79,22 @@ requests_unixsocket
 ```
 sudo pip install -r requirements.txt --target ./ -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
+
+- 依赖安装完之后，需要设置 PYTHONPATH 环境变量，用于确保应用中能正确加载到模块文件
+  - 在 CloudIDE 的「终端」打开并编辑 bashrc
+  ```
+  $ vim ~/.bashrc
+  ```
+
+  - 将以下内容附加到文件末尾
+  ```
+  export PYTHONPATH=$PYTHONPATH:/你的工作空间地址
+  ```
+
+  - 重新加载 shell
+  ```
+  $ source ~/.bashrc
+  ```
 
 ## 配置应用入口信息
 - 打开 serverless_config.py，配置以下信息
