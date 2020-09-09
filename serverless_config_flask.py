@@ -11,6 +11,7 @@ SAFE = [
 
 import multiprocessing
 import gunicorn.app.base
+import requests_unixsocket
 import os
 import logging
 import importlib
