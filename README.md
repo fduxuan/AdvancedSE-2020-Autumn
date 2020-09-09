@@ -12,6 +12,18 @@
 - serverless.py
   - 不可删除
 
+## 安装依赖
+- 新建依赖文件 requirements.txt，如果原 Python 项目有该文件，则打开该文件，添加以下依赖项
+```
+gunicorn
+requests_unixsocket
+```
+
+- 打开 CloudIDE 终端，执行以下命令，安装依赖
+```
+sudo pip install -r requirements.txt --target ./ -i https://pypi.tuna.tsinghua.edu.cn/simple
+```
+
 ## 创建静态应用
 - 将本地开发好的静态应用直接拖拽到 CloudIDE 项目文件列表即可
 - 或者直接在 CloudIDE 项目文件列表创建
