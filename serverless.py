@@ -27,10 +27,10 @@ def initializeMethod(console):
 # 每n秒执行一次
 def detectServerStart():
   count = 0
-  maxi = 50
+  maxi = 100
   while True:
     if not os.path.exists(socketPath) and count <= maxi:
-      time.sleep(0.2)
+      time.sleep(0.1)
       count += 1
     else:
       return
