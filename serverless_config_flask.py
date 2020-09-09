@@ -46,7 +46,7 @@ def run():
     console = logging.getLogger()
     p = multiprocessing.Process(target = worker, args = ())
     p.start()
-    p.join(0.2)
+    p.join(1)
     return True
   except Exception as e: 
     console.error(repr(e))
