@@ -6,7 +6,8 @@ FRAMEWORK = {
 SAFE = [
   '/api',
   '/.workbench',
-  '/serverless.py'
+  '/serverless.py',
+  '/serverless_config.py'
 ]
 
 import multiprocessing
