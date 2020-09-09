@@ -36,6 +36,7 @@ def detectServerStart():
 
 def req(event, context):
   try:
+    requests_unixsocket = serverless_config.requests_unixsocket
     console = logging.getLogger()
     request = requests_unixsocket.Session()
     body = None
