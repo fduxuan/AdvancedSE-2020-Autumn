@@ -9,7 +9,7 @@
   - 不可删除，依赖文件
   - 需要打开 CloudIDE 的「终端」输入以下命令进行安装
   ```
-    sudo pip install -r requirements.txt --target ./ -i https://pypi.tuna.tsinghua.edu.cn/simple
+  sudo pip install -r requirements.txt --target ./ -i https://pypi.tuna.tsinghua.edu.cn/simple
   ```
 
 - serverless_config.py
