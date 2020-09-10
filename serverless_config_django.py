@@ -1,5 +1,5 @@
 FRAMEWORK = {
-  'module': 'HelloWorld'
+  'module': 'settings'
 }
 
 SAFE = [
@@ -15,7 +15,7 @@ import os
 import logging
 from django.core.wsgi import get_wsgi_application
 # DJANGO_SETTINGS_MODULE设置为对应的模块名
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', FRAMEWORK['module'] + '.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', FRAMEWORK['module'])
 
 def number_of_workers():
   return (multiprocessing.cpu_count() * 2) + 1
