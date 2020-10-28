@@ -71,6 +71,7 @@
   | /api/meeting/apply              | Post | 申请会议                          | 除了id和pc,status以外的所有字段，此时本人自动成为chair，当前该chair并不可见 | None   |
   | /api/meeting/find/ordinary      | Post | 普通查找，只返回status为success的 | mongo风格的查找，filter写法                                  | List   |
   | /api/meeting/find/apply         | Post | filter写法，查找自己申请的会议    | mongo风格的查找                                              | list   |
+  | /api/meeting/find/unchecked     | Post | 查找当前待审核的会议，admin为true的用户，filter写法    | mongo风格的查找                                              | list   |
   | /api/meeting/:mid/audit         | Post | 审核申请,admin为true的用户        | {'audit': ture/false}                                        | status |
   | /api/meeting/:mid/pc/invite     | Post | 邀请pc                            | 列表形式的参数[uid1, uid2,uid3]                              | None   |
   | /api/meeting/:mid/pc/attend     | Post | 邀请后加入                        | {'attend': true/false}                                       | None   |
