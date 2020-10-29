@@ -11,8 +11,13 @@ import json
 from functools import wraps
 
 
-# 修饰返回值格式
+
 def json_success(func):
+    """
+    decorate return format
+    :param func:
+    :return:
+    """
     @wraps(func)
     def success(**kwargs):
         return json.dumps({'code':0 , 'data': func(**kwargs)})

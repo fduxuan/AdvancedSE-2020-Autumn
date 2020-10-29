@@ -23,7 +23,7 @@ app.config.from_object(Config)
 @app.before_first_request
 def setups():
     """
-    在第一个request 之前连接mongo数据库
+    connect to mongo before the first request
     :return:
     """
     mongo_url = app.config.get('MONGO_URL')
@@ -34,7 +34,7 @@ def setups():
 @app.errorhandler(DatebaseError)
 def framework_error(e):
     """
-    规范化的项目级异常处理
+    standard exception handler in project
     :param e:
     :return:
     """
