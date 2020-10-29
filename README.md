@@ -21,7 +21,7 @@
   | _id      | Object/string | mongo 主键                                                   |
   | Nickname | String        | 用户名                                                       |
   | Fullname | String        | 真实姓名                                                     |
-  | Password | Passwork      | 随意，不加密也行                                             |
+  | Password | Password      | 随意，不加密也行                                             |
   | email    | string        |                                                              |
   | company  | string        |                                                              |
   | area     | String        | 用户所在地                                                   |
@@ -109,7 +109,7 @@
 
 ---
 
-#### Paple
+#### Paper
 
 - **数据库设计**
 
@@ -158,6 +158,7 @@
   | score      | float         | 分数             |
   | comment    | string        | 评价             |
   | confidence | string        | 我也不知道是什么 |
+  | confirmed  | Boolean       | 打分是否已确认，review评分后为true，一轮发布后为false，rebuttal DDL后必须再确认一次|
 
 
 
