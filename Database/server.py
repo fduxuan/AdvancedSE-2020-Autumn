@@ -9,12 +9,42 @@ Desc: 启动
 """
 from flask import Flask
 from blueprint import user_blueprint
+from middleware.config import Config
+from flask import request, jsonify, Response
+import pymongo
+from middleware import DatebaseError
+import json
 
 
 app = Flask(__name__)
+app.config.from_object(Config)
+
+
+@app.before_first_request
+def setups():
+    """
+    在第一个request 之前连接mongo数据库
+    :return:
+    """
+    mongo_url = app.config.get('MONGO_URL')
+    mongo_client = pymongo.MongoClient(mongo_url)
+    request.db = mongo_client.get_database(name=app.config.get('DEFAULT_DATABASE'))
+
+
+@app.errorhandler(DatebaseError)
+def framework_error(e):
+    """
+    规范化的项目级异常处理
+    :param e:
+    :return:
+    """
+    return json.dumps(e.json(), ensure_ascii=False)
+
 
 app.register_blueprint(user_blueprint, url_prefix="/api/db/user")
 
 
+
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host=app.config.get('HOST'), port=app.config.get('PORT'))

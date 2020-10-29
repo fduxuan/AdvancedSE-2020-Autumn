@@ -12,7 +12,7 @@ import datetime
 import os
 import base64
 from pymongo.errors import DuplicateKeyError
-from ..errors import DUPLICATED_MONGO_KEY, NO_RECORD
+from middleware.errors import DUPLICATED_MONGO_KEY, NO_RECORD
 
 
 def get_uuid():
@@ -53,6 +53,10 @@ class Model:
     def collection(self):
         return self.coll_name
 
+    @property
+    def database(self):
+        return self.mongo_db.name
+
     def create(self, data=None, **kwargs):
         """
         create a new model
@@ -71,7 +75,6 @@ class Model:
         except DuplicateKeyError as exception:
             raise DUPLICATED_MONGO_KEY
         return result.inserted_id
-
 
     def find_one(self, query=None, to_raise=True):
         """
