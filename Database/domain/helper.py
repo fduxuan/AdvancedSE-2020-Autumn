@@ -121,7 +121,7 @@ class Model:
             doc.pop("_id")
         if "created_at" in doc:
             doc.pop("created_at")
-        self.coll.update_one(query, doc)
+        self.coll.update_one(query, {"$set": doc})
 
     def update_many(self, query, doc):
         if "_id" in doc:

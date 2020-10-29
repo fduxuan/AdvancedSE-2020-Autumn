@@ -9,6 +9,7 @@ Desc:
 """
 from .helper import Model
 
+
 class User(Model):
     coll_name = "user"
 

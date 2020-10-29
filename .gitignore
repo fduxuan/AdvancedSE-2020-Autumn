@@ -5,3 +5,4 @@ package-lock.json
 .DS*
 venv
 /db/
+/Database/.pytest_cache

@@ -10,7 +10,7 @@ Desc: 启动
 from flask import Flask
 from blueprint import user_blueprint
 from middleware.config import Config
-from flask import request, jsonify, Response
+from flask import request
 import pymongo
 from middleware import DatebaseError
 import json
@@ -28,7 +28,7 @@ def setups():
     """
     mongo_url = app.config.get('MONGO_URL')
     mongo_client = pymongo.MongoClient(mongo_url)
-    request.db = mongo_client.get_database(name=app.config.get('DEFAULT_DATABASE'))
+    app.db = mongo_client.get_database(name=app.config.get('DEFAULT_DATABASE'))
 
 
 @app.errorhandler(DatebaseError)
@@ -42,8 +42,6 @@ def framework_error(e):
 
 
 app.register_blueprint(user_blueprint, url_prefix="/api/db/user")
-
-
 
 
 if __name__ == '__main__':

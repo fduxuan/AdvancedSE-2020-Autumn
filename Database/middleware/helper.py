@@ -25,12 +25,16 @@ def parse_find_from_request(request):
     :param request:
     :return:
     """
-    json = request.json or dict()
-    query = json.get('filter', dict())
-    project = json.get('project', None)
-    sort = json.get('sort', None)
-    limit = json.get('limit', 500)
-    skip = json.get('skip', 0)
+    data = request.get_json()
+    query = data.get('filter', dict())
+    project = data.get('project', None)
+    sort = data.get('sort', None)
+    limit = data.get('limit', None)
+    skip = data.get('skip', None)
+    if limit is None:
+        limit = 500
+    if skip is None:
+        skip = 0
     if sort is None:
         sort = [("created_at", 1)]
     if isinstance(sort, dict):
