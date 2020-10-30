@@ -228,3 +228,14 @@
   
 
 事实上find是一个大概的api，可以根据不同的场景拆分为find/<meeting_id> 啊代表在某个meeting下这种控制
+
+
+### 现有数据库设计的问题/建议
+#### Meeting
+- 前端需要用到meeting的submitStatus, 由于是写死的字符串匹配，数据库的meeting生命周期最好能与之匹配。
+目前看到的状态："false"->"inSubmit"->"withTopic"/"withAverage"->"firstDiscussion"->"rebuttal"->"final"
+- 建议给meeting加一个author字段，存储该会议所有的contributor id，前端需要借此判断author role；另外，author role是只针对contributor，而非全部作者的。
+#### Record
+- 目前对打分记录的状态设计有缺陷。前端有一个需求：一篇paper，在第一次发布之后、最终发布之前，作者只能看到第一次发布的分数，但pc却有修改分数的机会。建议给record加一个oldScore字段，这样比两条record（一条作废、一条confirm）简单一些。
+#### Paper
+- rebuttal阶段，前端只有提交一次rebuttal或放弃rebuttal的机会。Paper生命周期只有accepted和rejected是不够的，要加一个状态，表示是否已经做过rebuttal/confirm操作了，给前端使用。
