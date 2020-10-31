@@ -10,7 +10,7 @@ Desc:
 from itertools import count
 
 
-class DatebaseError(Exception):
+class DatabaseError(Exception):
 
     uni_name = "DatebaseError"  # MediateError
 
@@ -35,24 +35,24 @@ class DatebaseError(Exception):
 
 err_count = count()
 
-SUCCESS = DatebaseError(next(err_count))
-UNKNOWN_ERROR = DatebaseError(next(err_count))
-NONEXISTENT_MONGO_ID = DatebaseError(next(err_count), "不存在该id")
-NO_RECORD = DatebaseError(next(err_count), "没有该记录")
-DUPLICATED_MONGO_KEY = DatebaseError(next(err_count), "重复的数据id")
+SUCCESS = DatabaseError(next(err_count))
+UNKNOWN_ERROR = DatabaseError(next(err_count))
+NONEXISTENT_MONGO_ID = DatabaseError(next(err_count), "不存在该id")
+NO_RECORD = DatabaseError(next(err_count), "没有该记录")
+DUPLICATED_MONGO_KEY = DatabaseError(next(err_count), "重复的数据id")
 
 
-def find_error(code) -> DatebaseError:
+def find_error(code) -> DatabaseError:
     for name, obj in globals().items():
-        if isinstance(obj, DatebaseError):
+        if isinstance(obj, DatabaseError):
             if obj.code == code:
                 return obj
-    raise DatebaseError(code=code)
+    raise DatabaseError(code=code)
 
 
 def update_name():
     for name, obj in globals().copy().items():
-        if isinstance(obj, DatebaseError):
+        if isinstance(obj, DatabaseError):
             obj.name = name
 
 

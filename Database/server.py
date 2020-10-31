@@ -10,7 +10,6 @@ Desc: 启动
 from flask import Flask
 from blueprint import user_blueprint
 from middleware.config import Config
-from flask import request
 import pymongo
 from middleware import DatebaseError
 import json
