@@ -2,7 +2,7 @@
 FROM java:8
 # 将本地文件夹挂载到当前容器
 VOLUME /tmp
-ADD sc-modify-article-info-service-0.0.1-SNAPSHOT.jar /app.jar
+ADD sc-discussion-service-0.0.1-SNAPSHOT.jar /app.jar
 ENTRYPOINT  ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
-EXPOSE 10025
+EXPOSE 10026

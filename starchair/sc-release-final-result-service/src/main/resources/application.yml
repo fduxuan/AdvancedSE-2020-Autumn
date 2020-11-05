@@ -1,5 +1,5 @@
 server:
-  port: 10099
+  port: 10023
 spring:
   application:
     name: sc-releasefinalresult-service
@@ -7,11 +7,19 @@ spring:
     user:
       name: root
       password: root
-
+  datasource:
+    url: jdbc:mysql://192.168.99.100:3306/test?serverTimezone=UTC
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+      hibernate:
+        ddl-auto: update
+      show-sql: true
 eureka:
   client:
     service-url:
-      defaultZone: http://root:root@sc:10086/eureka/
+      defaultZone: http://root:root@sc:10010/eureka/
     instance:
       prefer-ip-address: true
 management:
