@@ -6,3 +6,4 @@ package-lock.json
 venv
 /db/
 /Database/.pytest_cache
+.idea/*
