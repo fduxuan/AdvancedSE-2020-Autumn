@@ -1,0 +1,28 @@
+server:
+  port: 10010
+
+spring:
+  security:
+    user:
+      name: root
+      password: root
+#  datasource:
+#    url: jdbc:mysql://192.168.99.100:3306/test?serverTimezone=UTC
+#    username: root
+#    password: 123456
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
+
+eureka:
+  instance:
+    hostname: sc
+    perfer-ip-address: true
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    service-url:
+      defaultZone:  http://root:root@sc:10010/eureka/
+
