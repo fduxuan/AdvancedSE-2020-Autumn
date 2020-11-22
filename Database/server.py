@@ -11,7 +11,7 @@ from flask import Flask
 from blueprint import user_blueprint
 from middleware.config import Config
 import pymongo
-from middleware import DatebaseError
+from middleware import DatabaseError
 import json
 
 
@@ -30,7 +30,7 @@ def setups():
     app.db = mongo_client.get_database(name=app.config.get('DEFAULT_DATABASE'))
 
 
-@app.errorhandler(DatebaseError)
+@app.errorhandler(DatabaseError)
 def framework_error(e):
     """
     standard exception handler in project
