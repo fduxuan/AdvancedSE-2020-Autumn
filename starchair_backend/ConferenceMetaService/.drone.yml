@@ -1,0 +1,35 @@
+services:
+  mongo:
+    image: mongo
+
+pipeline:
+#  test:
+#    image: taskalive/toolbox
+#    environment:
+#      - MONGO_URL=mongodb://mongo
+#      - SESSION=http://session
+#    commands:
+#      - pip3 install m3u8
+#      - python3 -m unittest
+
+  build:
+    image: registry.cn-hangzhou.aliyuncs.com/docker_io_allen/docker:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    commands:
+      - docker build -t starchair/conference-meta-service:latest .
+
+  deploy:
+    image: registry.cn-hangzhou.aliyuncs.com/docker_io_allen/docker:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    commands:
+      - docker rm -f conference-meta-service || true
+      - docker image tag starchair/conference-meta-service:latest starchair/conference-meta-service:master
+      - docker rmi $(docker images | grep "none" | awk '{print $3}') || true
+      - >
+        docker run -d --restart always --network=starchair
+        -v /srv/starchair/ConferenceMetaService:/everything -p 5002:5002
+        --name conference-meta-service starchair/conference-meta-service:master
+    when:
+      branch: master

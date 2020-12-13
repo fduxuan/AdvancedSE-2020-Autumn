@@ -7,3 +7,4 @@ venv
 /db/
 /Database/.pytest_cache
 .idea/*
+StarChair_Python/ConsulCenter/data

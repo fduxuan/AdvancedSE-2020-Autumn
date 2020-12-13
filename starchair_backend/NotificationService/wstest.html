@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test websocket</title>
+    <script type="text/javascript">
+        var webSocket = WebSocket || window.WebSocket || window.MozWebSocket;
+        if (!webSocket){
+            alert("WebSocket is not supported!")
+        }
+        else{
+            var ws = null;
+
+            function createConnect(){
+                var userName = document.getElementById("name").value;
+                if (ws == null){
+                    try {
+                        ws = new WebSocket('ws://106.14.244.24:5007/ws/'+userName);
+                        ws.onopen = function (event) {
+                            console.log('WebSocket连接成功    状态码：' + ws.readyState)
+                        }
+                        ws.onerror = function (event) {
+                            console.log('WebSocket连接发生错误   状态码：' + ws.readyState)
+                        }
+                        ws.onclose = function (event) {
+                            console.log('WebSocket连接关闭')
+                            var message_display = document.getElementById("message");
+                            // console.log(message_display);
+                            message_display.innerHTML = "";
+
+                        }
+                        // 监听消息
+                        ws.onmessage = function (event) {
+                            var message_display = document.getElementById("message");
+                            // console.log(message_display);
+                            message_display.innerHTML += event.data;
+                            console.log("onmessage(), 接收到服务器消息: " + event.data);
+                        };
+                        // 监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+                        window.onbeforeunload = function (event ){
+                            console.log("CloseConnect()");
+                            ws.close();
+                            ws = null;
+                        }
+
+
+                    }catch (e) {
+                        ws = null;
+                        console.log("连接异常");
+                    }
+                }
+            }
+            function closeConnect () {
+                console.log("CloseConnect()");
+                if (ws != null) {
+                    ws.close();
+                    ws = null;
+                }
+            }
+
+        }
+    </script>
+</head>
+<body>
+<input type="text" id="name" name="name" size="10">
+<button onclick="createConnect()">登录</button>
+<button onclick="closeConnect()">退出</button>
+<div id="message"></div>
+</body>
+</html>

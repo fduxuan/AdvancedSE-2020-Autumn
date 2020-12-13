@@ -1,6 +1,0 @@
-flask
-pymongo
-pytest
-requests
-python-consul
-consulate
