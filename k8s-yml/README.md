@@ -1,5 +1,5 @@
 启动有先后顺序
-
+一定要确保上一个都run了之后再启动下一个，否则会找不到地址
 ```
 # 启动所有基础镜像，数据库，注册中心，消息队列
 kubectl apply -f starchair-basic-component.yml
