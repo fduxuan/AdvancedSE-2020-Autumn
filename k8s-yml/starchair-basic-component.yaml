@@ -1,0 +1,438 @@
+# consul for service registry
+apiVersion: v1
+kind: Service
+metadata:
+  name: consul-service
+  namespace: ase-ns-10
+spec:
+  ports:
+  - port: 8500
+    protocol: TCP
+  selector:
+    app: consul
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consul-deploy
+  namespace: ase-ns-10
+  labels:
+    app: consul
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: consul
+  template:
+    metadata:
+      labels:
+        app: consul
+    spec:
+      containers:
+      - name: consul
+        image: consul:1.4.4
+        ports:
+        - containerPort: 8500
+        args:
+        - agent
+        - -server
+        - -bootstrap
+        - -ui
+        - -node=1
+        - -client=0.0.0.0
+        env:
+        - name: CONSUL_BIND_INTERFACE
+          value: eth0      
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+---
+# mongodb
+## mongo-conference
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-conference-service
+  namespace: ase-ns-10
+spec:
+  ports:
+  - port: 27017
+    protocol: TCP
+  selector:
+    app: mongo-conference
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-conference-deploy
+  namespace: ase-ns-10
+  labels:
+    app: mongo-conference
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-conference
+  template:
+    metadata:
+      labels:
+        app: mongo-conference
+    spec:
+      containers:
+      - name: mongo-conference
+        image:  mongo
+        ports:
+        - containerPort: 27017
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+
+---
+## mongo-discussion
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-discussion-service
+  namespace: ase-ns-10
+spec:
+  ports:
+  - port: 27017
+    protocol: TCP
+  selector:
+    app: mongo-discussion
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-discussion-deploy
+  namespace: ase-ns-10
+  labels:
+    app: mongo-discussion
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-discussion
+  template:
+    metadata:
+      labels:
+        app: mongo-discussion
+    spec:
+      containers:
+      - name: mongo-discussion
+        image:  mongo
+        ports:
+        - containerPort: 27017
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+
+---
+## mongo-draft
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-draft-service
+  namespace: ase-ns-10
+spec:
+  ports:
+  - port: 27017
+    protocol: TCP
+  selector:
+    app: mongo-draft
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-draft-deploy
+  namespace: ase-ns-10
+  labels:
+    app: mongo-draft
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-draft
+  template:
+    metadata:
+      labels:
+        app: mongo-draft
+    spec:
+      containers:
+      - name: mongo-draft
+        image:  mongo
+        ports:
+        - containerPort: 27017
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+
+---
+## mongo-invitation
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-invitation-service
+  namespace: ase-ns-10
+spec:
+  ports:
+  - port: 27017
+    protocol: TCP
+  selector:
+    app: mongo-invitation
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-invitation-deploy
+  namespace: ase-ns-10
+  labels:
+    app: mongo-invitation
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-invitation
+  template:
+    metadata:
+      labels:
+        app: mongo-invitation
+    spec:
+      containers:
+      - name: mongo-invitation
+        image:  mongo
+        ports:
+        - containerPort: 27017
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+
+---
+## mongo-notification
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-notification-service
+  namespace: ase-ns-10
+spec:
+  ports:
+  - port: 27017
+    protocol: TCP
+  selector:
+    app: mongo-notification
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-notification-deploy
+  namespace: ase-ns-10
+  labels:
+    app: mongo-notification
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-notification
+  template:
+    metadata:
+      labels:
+        app: mongo-notification
+    spec:
+      containers:
+      - name: mongo-notification
+        image:  mongo
+        ports:
+        - containerPort: 27017
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+
+---
+## mongo-review-process
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-review-process-service
+  namespace: ase-ns-10
+spec:
+  ports:
+  - port: 27017
+    protocol: TCP
+  selector:
+    app: mongo-review-process
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-review-process-deploy
+  namespace: ase-ns-10
+  labels:
+    app: mongo-review-process
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-review-process
+  template:
+    metadata:
+      labels:
+        app: mongo-review-process
+    spec:
+      containers:
+      - name: mongo-review-process
+        image:  mongo
+        ports:
+        - containerPort: 27017
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+
+---
+## mongo-user
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-user-service
+  namespace: ase-ns-10
+spec:
+  ports:
+  - port: 27017
+    protocol: TCP
+  selector:
+    app: mongo-user
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-user-deploy
+  namespace: ase-ns-10
+  labels:
+    app: mongo-user
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-user
+  template:
+    metadata:
+      labels:
+        app: mongo-user
+    spec:
+      containers:
+      - name: mongo-user
+        image:  mongo
+        ports:
+        - containerPort: 27017
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+
+---
+# rabbitmq
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbit-service
+  namespace: ase-ns-10
+spec:
+  ports:
+  - name: rabbit15672
+    port: 15672
+    protocol: TCP
+  - name: rabbit5672
+    port: 5672
+    protocol: TCP
+  selector:
+    app: rabbit
+  type: LoadBalancer
+  # 若只需集群内部访问 type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbit-deploy
+  namespace: ase-ns-10
+  labels:
+    app: rabbit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbit
+  template:
+    metadata:
+      labels:
+        app: rabbit
+    spec:
+      containers:
+      - name: rabbit
+        image: rabbitmq:3.8-management
+        ports:
+        - containerPort: 15672
+          name: rabbit15672
+        - containerPort: 5672
+          name: rabbit5672
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+
+---
+# redis
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+  namespace: ase-ns-10
+spec:
+  ports:
+  - port: 6379
+    protocol: TCP
+  selector:
+    app: redis
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deploy
+  namespace: ase-ns-10
+  labels:
+    app: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - name: redis
+        image:  redis
+        ports:
+        - containerPort: 6379
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+
+

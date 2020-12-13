@@ -1,0 +1,19 @@
+.text-one-line {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tag-one-line {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.text-more-line {
+  -webkit-line-clamp: 5; 
+  display: -webkit-box; 
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  overflow: hidden;
+}

@@ -1,0 +1,293 @@
+# starchair-conference-service
+apiVersion: v1
+kind: Service
+metadata:
+  name: starchair-conference-service
+  namespace: ase-ns-10
+spec:
+  ports:
+  - port: 5002
+    protocol: TCP
+  selector:
+    app: starchair-conference-service
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: starchair-conference-deploy
+  namespace: ase-ns-10
+  labels:
+    app: starchair-conference-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: starchair-conference-service
+  template:
+    metadata:
+      labels:
+        app: starchair-conference-service
+    spec:
+      containers:
+      - name: starchair-conference-service
+        image: registry.cn-hangzhou.aliyuncs.com/youngf/starchair-conference-service:1.0
+        ports:
+        - containerPort: 5002
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+
+---
+# starchair-discussion-service
+apiVersion: v1
+kind: Service
+metadata:
+  name: starchair-discussion-service
+  namespace: ase-ns-10
+spec:
+  ports:
+  - port: 5005
+    protocol: TCP
+  selector:
+    app: starchair-discussion-service
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: starchair-discussion-deploy
+  namespace: ase-ns-10
+  labels:
+    app: starchair-discussion-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: starchair-discussion-service
+  template:
+    metadata:
+      labels:
+        app: starchair-discussion-service
+    spec:
+      containers:
+      - name: starchair-discussion-service
+        image: registry.cn-hangzhou.aliyuncs.com/youngf/starchair-discussion-service:1.0
+        ports:
+        - containerPort: 5005
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+
+---
+# starchair-draft-service
+apiVersion: v1
+kind: Service
+metadata:
+  name: starchair-draft-service
+  namespace: ase-ns-10
+spec:
+  ports:
+  - port: 5003
+    protocol: TCP
+  selector:
+    app: starchair-draft-service
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: starchair-draft-deploy
+  namespace: ase-ns-10
+  labels:
+    app: starchair-draft-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: starchair-draft-service
+  template:
+    metadata:
+      labels:
+        app: starchair-draft-service
+    spec:
+      containers:
+      - name: starchair-draft-service
+        image: registry.cn-hangzhou.aliyuncs.com/youngf/starchair-draft-service:1.0
+        ports:
+        - containerPort: 5003
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+
+---
+# starchair-invitation-service
+apiVersion: v1
+kind: Service
+metadata:
+  name: starchair-invitation-service
+  namespace: ase-ns-10
+spec:
+  ports:
+  - port: 5004
+    protocol: TCP
+  selector:
+    app: starchair-invitation-service
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: starchair-invitation-deploy
+  namespace: ase-ns-10
+  labels:
+    app: starchair-invitation-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: starchair-invitation-service
+  template:
+    metadata:
+      labels:
+        app: starchair-invitation-service
+    spec:
+      containers:
+      - name: starchair-invitation-service
+        image: registry.cn-hangzhou.aliyuncs.com/youngf/starchair-invitation-service:1.0
+        ports:
+        - containerPort: 5004
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+
+---
+# starchair-notification-service
+apiVersion: v1
+kind: Service
+metadata:
+  name: starchair-notification-service
+  namespace: ase-ns-10
+spec:
+  ports:
+  - port: 5007
+    protocol: TCP
+  selector:
+    app: starchair-notification-service
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: starchair-notification-deploy
+  namespace: ase-ns-10
+  labels:
+    app: starchair-notification-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: starchair-notification-service
+  template:
+    metadata:
+      labels:
+        app: starchair-notification-service
+    spec:
+      containers:
+      - name: starchair-notification-service
+        image: registry.cn-hangzhou.aliyuncs.com/youngf/starchair-notification-service:1.0
+        ports:
+        - containerPort: 5007
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+
+---
+# starchair-review-process-service
+apiVersion: v1
+kind: Service
+metadata:
+  name: starchair-review-process-service
+  namespace: ase-ns-10
+spec:
+  ports:
+  - port: 5006
+    protocol: TCP
+  selector:
+    app: starchair-review-process-service
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: starchair-review-process-deploy
+  namespace: ase-ns-10
+  labels:
+    app: starchair-review-process-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: starchair-review-process-service
+  template:
+    metadata:
+      labels:
+        app: starchair-review-process-service
+    spec:
+      containers:
+      - name: starchair-review-process-service
+        image: registry.cn-hangzhou.aliyuncs.com/youngf/starchair-review-process-service:1.0
+        ports:
+        - containerPort: 5006
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+
+---
+# starchair-user-service
+apiVersion: v1
+kind: Service
+metadata:
+  name: starchair-user-service
+  namespace: ase-ns-10
+spec:
+  ports:
+  - port: 5001
+    protocol: TCP
+  selector:
+    app: starchair-user-service
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: starchair-user-deploy
+  namespace: ase-ns-10
+  labels:
+    app: starchair-user-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: starchair-user-service
+  template:
+    metadata:
+      labels:
+        app: starchair-user-service
+    spec:
+      containers:
+      - name: starchair-user-service
+        image: registry.cn-hangzhou.aliyuncs.com/youngf/starchair-user-service:1.0
+        ports:
+        - containerPort: 5001
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+
