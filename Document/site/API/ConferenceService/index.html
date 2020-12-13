@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="fduxuan">
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>ConferenceService - StarChair 重构版文档 By Group 10</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../../css/extra.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "ConferenceService";
+    var mkdocs_page_input_path = "API/ConferenceService.md";
+    var mkdocs_page_url = "/docs/API/ConferenceService/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> StarChair 重构版文档 By Group 10</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="tocbase current">
+    
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../..">目录</a>
+  </li>
+    
+      
+  <li class="navtree toctree-l1 label">
+    <p class="caption">整体架构</p>
+  </li>
+
+
+  
+
+  
+    <li class="navtree toctree-l1 group">
+      <ul class="navtree subnav-l1 current">
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../framework/abstract/">前言</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../framework/framework/">基本框架</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../framework/breakdown/">业务拆分思路</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../framework/messageQueue/">消息队列</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../framework/deploy/">注册中心与部署</a>
+  </li>
+        
+      </ul>
+    </li>
+    
+      
+  <li class="navtree toctree-l1 label">
+    <p class="caption">服务端文档</p>
+  </li>
+
+
+  
+
+  
+    <li class="navtree toctree-l1 group">
+      <ul class="navtree subnav-l1 current">
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../errors/">接口标准规范</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../UserService/">UserService</a>
+  </li>
+        
+          
+
+
+  
+    
+    <li class="navtree toctree-l2 page current">
+      <a class="current" href="./">
+        ConferenceService
+          <span class="toctree-expand"></span>
+      </a>
+    </li>
+    
+      
+
+
+
+  <li class="toctree-l2 current">
+    <ul class="subnav-l2 current">
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#1">1. 数据库字段参考</a>
+        </li>
+    
+      
+          
+
+  <li class="toctree-l3">
+    <a href="#2-api">
+      2. 面向所有用户API
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l3">
+    <ul class="subnav-l3 toc-hidden">
+    
+      
+          
+
+  <li class="toctree-l4 current with-children">
+    <a href="#21">
+      2.1 申请创建会议
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4 current">
+    <ul class="subnav-l4 current">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_1">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_2">响应</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l4">
+    <a href="#22-id">
+      2.2 通过会议Id获取会议信息
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4">
+    <ul class="subnav-l4 toc-hidden">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_3">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_4">响应</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_5">异常</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l4">
+    <a href="#23-chairman">
+      2.3 当前用户获得自己作为chairman的所有会议
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4">
+    <ul class="subnav-l4 toc-hidden">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_6">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_7">响应</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l4">
+    <a href="#24-pcmember">
+      2.4 当前用户获得自己作为pcMember的所有会议
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4">
+    <ul class="subnav-l4 toc-hidden">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_8">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_9">响应</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l4">
+    <a href="#25-contributor">
+      2.5 当前用户获得自己作为contributor的所有会议
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4">
+    <ul class="subnav-l4 toc-hidden">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_10">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_11">响应</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l4">
+    <a href="#26">
+      2.6 获取当前用户所有参与会议的信息
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4">
+    <ul class="subnav-l4 toc-hidden">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_12">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_13">响应</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l4">
+    <a href="#27">
+      2.7 当前所有用户可见的会议
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4">
+    <ul class="subnav-l4 toc-hidden">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_14">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_15">响应</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l4">
+    <a href="#28">
+      2.8 可投稿的会议信息
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4">
+    <ul class="subnav-l4 toc-hidden">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_16">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_17">响应</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l3">
+    <a href="#3-chairman-api">
+      3. 面向chairman API
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l3">
+    <ul class="subnav-l3 toc-hidden">
+    
+      
+          
+
+  <li class="toctree-l4 current with-children">
+    <a href="#31">
+      3.1 改变会议状态
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4 current">
+    <ul class="subnav-l4 current">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_18">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_19">响应</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_20">异常</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l3">
+    <a href="#4-api">
+      4. 面向管理员API
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l3">
+    <ul class="subnav-l3 toc-hidden">
+    
+      
+          
+
+  <li class="toctree-l4 current with-children">
+    <a href="#41">
+      4.1 审核通过会议
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4 current">
+    <ul class="subnav-l4 current">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_21">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_22">响应</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_23">异常</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l4">
+    <a href="#42">
+      4.2 审核拒绝会议
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4">
+    <ul class="subnav-l4 toc-hidden">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_24">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_25">响应</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l4">
+    <a href="#43">
+      4.3 获取未被审核的会议信息
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4">
+    <ul class="subnav-l4 toc-hidden">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_26">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_27">响应</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_28">异常</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l3">
+    <a href="#5-api">
+      5. 服务间通信API
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l3">
+    <ul class="subnav-l3 toc-hidden">
+    
+      
+          
+
+  <li class="toctree-l4 current with-children">
+    <a href="#51">
+      5.1 添加审稿人
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4 current">
+    <ul class="subnav-l4 current">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_29">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_30">响应</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l4">
+    <a href="#52-id">
+      5.2 通过Id组获取会议信息
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4">
+    <ul class="subnav-l4 toc-hidden">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_31">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_32">响应</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+    </ul>
+  </li>
+
+      
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#6">6. 心跳检测</a>
+        </li>
+    
+    </ul>
+  </li>
+
+
+  
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../InvitationService/">InvitationService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../DraftService/">DraftService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../ReviewProcessService/">ReviewProcessService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../DiscussService/">DiscussService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../NotificationService/">NotificationService</a>
+  </li>
+        
+      </ul>
+    </li>
+    
+      
+  <li class="navtree toctree-l1 label">
+    <p class="caption">前端文档</p>
+  </li>
+
+
+  
+
+  
+    <li class="navtree toctree-l1 group">
+      <ul class="navtree subnav-l1 current">
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../frontend/procedure/">操作流程</a>
+  </li>
+        
+      </ul>
+    </li>
+    
+  </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">StarChair 重构版文档 By Group 10</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>服务端文档 &raquo;</li>
+        
+      
+    
+    <li>ConferenceService</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="conferenceservice">ConferenceService</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>port</strong>: 5002 <br></p>
+</div>
+<h2 id="1">1. 数据库字段参考</h2>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>shortenForm</td>
+<td>String</td>
+<td>false</td>
+<td>CHI</td>
+</tr>
+<tr>
+<td>fullName</td>
+<td>String</td>
+<td>false</td>
+<td>ACM Conference on Human Factors in Computing Systems</td>
+</tr>
+<tr>
+<td>startTime</td>
+<td>String</td>
+<td>false</td>
+<td>2020-12-13T13:44:44</td>
+</tr>
+<tr>
+<td>location</td>
+<td>String</td>
+<td>false</td>
+<td>Shanghai</td>
+</tr>
+<tr>
+<td>stopSubmittingTime</td>
+<td>String</td>
+<td>false</td>
+<td>2020-12-13T13:44:44</td>
+</tr>
+<tr>
+<td>publishingTime</td>
+<td>String</td>
+<td>false</td>
+<td>2020-12-13T13:44:44</td>
+</tr>
+<tr>
+<td>chairman</td>
+<td>String:id</td>
+<td>false</td>
+<td>user_id</td>
+</tr>
+<tr>
+<td>status</td>
+<td>String</td>
+<td>false</td>
+<td>init -&gt; accept / reject -&gt; submitting -&gt; reviewing -&gt; firstDiscussion -&gt; firstPublish -&gt; finalDiscussion -&gt; finalPublish</td>
+</tr>
+<tr>
+<td>topics</td>
+<td>[String]</td>
+<td>false</td>
+<td>[HCI]</td>
+</tr>
+<tr>
+<td>pcMembers</td>
+<td>[String: id]</td>
+<td>false</td>
+<td>[uid1, uid2, uid3]</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-api">2. 面向所有用户API</h2>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>以下所有api均需登录后方可调用，否则返回<code>{'code': 8, "data": "没有登录"}</code></p>
+</div>
+<h3 id="21">2.1 申请创建会议</h3>
+<pre class="codehilite"><code class="linenums"> [POST] /api/conference/createConference 
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>使用该方法进行会议创建的申请</p>
+</div>
+<h4 id="_1">请求</h4>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>shortenform</td>
+<td>String</td>
+<td>false</td>
+<td>CHI</td>
+</tr>
+<tr>
+<td>fullname</td>
+<td>String</td>
+<td>false</td>
+<td>ACM Conference on Human Factors in Computing Systems</td>
+</tr>
+<tr>
+<td>starttime</td>
+<td>String</td>
+<td>false</td>
+<td>2020-12-13T13:44:44</td>
+</tr>
+<tr>
+<td>location</td>
+<td>String</td>
+<td>false</td>
+<td>Shanghai</td>
+</tr>
+<tr>
+<td>stopsubmittingtime</td>
+<td>String</td>
+<td>false</td>
+<td>2020-12-13T13:44:44</td>
+</tr>
+<tr>
+<td>publishingtime</td>
+<td>String</td>
+<td>false</td>
+<td>2020-12-13T13:44:44</td>
+</tr>
+<tr>
+<td>topics</td>
+<td>[String]</td>
+<td>false</td>
+<td>[HCI]</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_2"><strong>响应</strong></h4>
+<p><strong>自动初始化</strong></p>
+<p><code>status = "init"</code> </p>
+<p><code>chairman = "current_userid"</code>(从session中获取，无需传) </p>
+<p><code>pcMember = ['current_userid']</code>(chairman自动成为pcmember)</p>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0, 
+    &quot;data&quot;: conference_id
+}
+</code></pre>
+
+<hr />
+<h3 id="22-id">2.2 通过会议Id获取会议信息</h3>
+<pre class="codehilite"><code class="linenums">[GET] /api/conference/getConferenceById/&lt;cid&gt;
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>使用该方法根据id获取会议信息</p>
+</div>
+<h4 id="_3"><strong>请求</strong></h4>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cid</td>
+<td>String</td>
+<td>false</td>
+<td>1</td>
+<td>url路径参数</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_4"><strong>响应</strong></h4>
+<p><strong>服务间调用</strong></p>
+<p>调用 <strong>UserService</strong> 服务获得 <code>chairman</code> 和  <code>pcMember</code> 的详细信息，组成结构体一体化返回</p>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0,
+    &quot;data&quot;: 
+        {
+            &quot;_id&quot;: 1,
+            &quot;shortenForm&quot;: CHI,
+            &quot;fullName&quot;:ACM Conference on Human Factors in Computing Systems,
+            &quot;chairman&quot;: {user_info},
+            &quot;pcMember&quot;:[{user_info}, {user_info}]
+             ……
+        }//返回对应记录信息
+}
+</code></pre>
+
+<h4 id="_5">异常</h4>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3</td>
+<td>没有该记录</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="23-chairman">2.3 当前用户获得自己作为chairman的所有会议</h3>
+<pre class="codehilite"><code class="linenums">[POST] /api/conference/attendAsChairman
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>使用该方法根据当前用户的id获取会议信息</p>
+</div>
+<h4 id="_6"><strong>请求</strong></h4>
+<p>无需传userid参数，自动从session中获取</p>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>data</td>
+<td>object</td>
+<td>true</td>
+<td>{status: 'accept'}</td>
+<td>可以传别的filter</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_7"><strong>响应</strong></h4>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0,
+    &quot;data&quot;: [
+        {
+            &quot;_id&quot;: 1,
+            &quot;shortenForm&quot;: CHI,
+            &quot;fullName&quot;:ACM Conference on Human Factors in Computing Systems,
+             ……
+            &quot;chairman&quot;: &quot;chairman_id&quot;,
+            &quot;pcMember&quot;: [uid1, uid2]
+             ……
+        }//返回对应记录信息
+    ]
+}
+</code></pre>
+
+<hr />
+<h3 id="24-pcmember">2.4 当前用户获得自己作为pcMember的所有会议</h3>
+<pre class="codehilite"><code class="linenums">[POST] /api/conference/attendAsPc
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>使用该方法根据当前用户的id获取相关信息</p>
+</div>
+<h4 id="_8"><strong>请求</strong></h4>
+<p>无需传userid参数，自动从session中获取</p>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>data</td>
+<td>object</td>
+<td>true</td>
+<td>{status: 'accept'}</td>
+<td>可以传别的filter</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_9"><strong>响应</strong></h4>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0,
+    &quot;data&quot;: [
+        {
+            &quot;_id&quot;: 1,
+            &quot;shortenForm&quot;: CHI,
+            &quot;fullName&quot;:ACM Conference on Human Factors in Computing Systems,
+             ……
+            &quot;chairman&quot;: &quot;chairman_id&quot;
+             ……
+        }//返回对应记录信息
+    ]
+}
+</code></pre>
+
+<hr />
+<h3 id="25-contributor">2.5 当前用户获得自己作为contributor的所有会议</h3>
+<pre class="codehilite"><code class="linenums">[POST] /api/conference/attendAsContributor
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>使用该方法根据当前用户的id获取相关信息</p>
+</div>
+<h4 id="_10"><strong>请求</strong></h4>
+<p>无需传userid参数，自动从session中获取</p>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>data</td>
+<td>object</td>
+<td>true</td>
+<td>{status: 'accept'}</td>
+<td>可以传别的filter</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_11"><strong>响应</strong></h4>
+<p><strong>服务间调用</strong></p>
+<ul>
+<li>调用 <strong>DraftService</strong> 服务获得当前用户投递的所有稿件，筛选出其中涉及所有的会议id进行查找</li>
+</ul>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0,
+    &quot;data&quot;: [
+        {
+            &quot;_id&quot;: 1,
+            &quot;shortenForm&quot;: CHI,
+            &quot;fullName&quot;:ACM Conference on Human Factors in Computing Systems,
+             ……
+            &quot;chairman&quot;: &quot;chairman_id&quot;
+             ……
+        }//返回对应记录信息
+    ]
+}
+</code></pre>
+
+<hr />
+<h3 id="26">2.6 获取当前用户所有参与会议的信息</h3>
+<pre class="codehilite"><code class="linenums">[GET] /api/conference/attendConference
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>使用该方法获得当前用户参与的所有会议信息，包括2.3, 2.4, 2.5 三种情况</p>
+</div>
+<h4 id="_12"><strong>请求</strong></h4>
+<p>无需传userid参数，自动从session中获取</p>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data</td>
+<td>Object</td>
+<td>True</td>
+<td>{status: 'accept'}</td>
+<td>可以传别的filter</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_13"><strong>响应</strong></h4>
+<p><strong>服务间调用</strong></p>
+<ul>
+<li>调用 <strong>DraftService</strong> 服务获得当前用户投递的所有稿件，筛选出其中涉及所有的会议id进行查找</li>
+</ul>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0,
+    &quot;data&quot;: [
+        {
+            &quot;_id&quot;: 1,
+            &quot;shortenForm&quot;: CHI,
+            &quot;fullName&quot;:ACM Conference on Human Factors in Computing Systems,
+             ……
+            &quot;chairman&quot;: &quot;chairman_id&quot;
+             ……
+        }//返回对应记录信息
+    ]
+}
+</code></pre>
+
+<hr />
+<h3 id="27">2.7 当前所有用户可见的会议</h3>
+<pre class="codehilite"><code class="linenums">[POST] /api/conference/visible
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>使用该方法获得所有用户可见的会议，即状态不为<code>init</code>和<code>reject</code>的会议</p>
+</div>
+<h4 id="_14"><strong>请求</strong></h4>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data</td>
+<td>Object</td>
+<td>true</td>
+<td>{status: 'accept'}</td>
+<td>可以传别的filter</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_15">响应</h4>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0,
+    &quot;data&quot;: [
+        {
+            &quot;_id&quot;: 1,
+            &quot;shortenForm&quot;: CHI,
+            &quot;fullName&quot;:ACM Conference on Human Factors in Computing Systems,
+             ……
+            &quot;status&quot;: &quot;...&quot;,
+             ……
+        }//返回对应记录信息
+    ]
+}
+</code></pre>
+
+<hr />
+<h3 id="28">2.8 可投稿的会议信息</h3>
+<pre class="codehilite"><code class="language-text linenums">[GET] /api/conference/getAcceptConference
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>使用该方法获取所有可投稿的会议， 即状态为<code>submitting</code> 的所有会议</p>
+</div>
+<h4 id="_16"><strong>请求</strong></h4>
+<p>无需参数</p>
+<h4 id="_17"><strong>响应</strong></h4>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0,
+    &quot;data&quot;: [
+        {
+            &quot;_id&quot;: 1,
+            &quot;shortenForm&quot;: CHI,
+            &quot;fullName&quot;: ACM Conference on Human Factors in Computing Systems,
+             ……
+            &quot;status&quot;: ’accept‘,
+             ……
+        }//返回对应记录信息
+    ]
+}
+</code></pre>
+
+<hr />
+<h2 id="3-chairman-api">3. 面向chairman API</h2>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>以下所有api均需登录后方可调用，否则返回<code>{'code': 8, "data": "没有登录"}</code></p>
+</div>
+<h3 id="31">3.1 改变会议状态</h3>
+<pre class="codehilite"><code class="linenums">[POST] /api/conference/changeStatus/&lt;cid&gt;
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p><code>chairman</code>使用该方法为会议修改状态，<u>前提要求会议已被管理员通过</u></p>
+</div>
+<h4 id="_18"><strong>请求</strong></h4>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>status</td>
+<td>String</td>
+<td>false</td>
+<td>accept</td>
+<td>post参数</td>
+</tr>
+<tr>
+<td>cid</td>
+<td>String</td>
+<td>false</td>
+<td>1</td>
+<td>url参数</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_19"><strong>响应</strong></h4>
+<p><strong>服务间调用</strong></p>
+<ul>
+<li>当 <code>status to ['reviewing', 'firstDiscussion', 'finalDiscussion']</code>时</li>
+</ul>
+<blockquote>
+<p>调用 <strong>NotificationService</strong> 服务向所有<code>pcMember</code>  发送异步通信消息:  <code>Conference {ShortenForm} has started process {status}!</code></p>
+</blockquote>
+<ul>
+<li>当 <code>status to ['finalPublish', 'firstPublish']</code>时</li>
+</ul>
+<blockquote>
+<p>调用 <strong>NotificationService</strong> 服务向<code>contributor</code>  发送异步通信消息: <code>Conference {ShortenForm} has publish first/final result!</code></p>
+</blockquote>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0,
+    &quot;data&quot;: null
+}
+</code></pre>
+
+<h4 id="_20">异常</h4>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>原因</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>无权操作</td>
+<td>非chairman</td>
+</tr>
+<tr>
+<td>11</td>
+<td>至少需要3个pcmember</td>
+<td>开启submitting时需要有3个pcmember</td>
+</tr>
+<tr>
+<td>12</td>
+<td>存在文稿未打分</td>
+<td>开启firstPublish状态时</td>
+</tr>
+<tr>
+<td>13</td>
+<td>存在rebuttal文稿未打分</td>
+<td>开启finalPublish状态时</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-api">4. 面向管理员API</h2>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>以下所有api均需登录后方可调用，否则返回<code>{'code': 8, "data": "没有登录"}</code></p>
+</div>
+<h3 id="41">4.1 审核通过会议</h3>
+<pre class="codehilite"><code class="linenums">[POST] /api/conference/approveConference/&lt;cid&gt;
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p><code>admin</code>使用该方法通过会议申请</p>
+</div>
+<h4 id="_21"><strong>请求</strong></h4>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cid</td>
+<td>String</td>
+<td>false</td>
+<td>1</td>
+<td>url路径参数</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_22"><strong>响应</strong></h4>
+<p><strong>服务间调用</strong></p>
+<ul>
+<li>调用 <strong>NotificationService</strong> 服务获得发送异步通信消息，告诉会议发起人</li>
+</ul>
+<p><code>Your Conference xxx has been accepted!</code></p>
+<p><strong>自动响应</strong></p>
+<p><code>status='accept'</code></p>
+<pre class="codehilite"><code class="language-text linenums">{
+    &quot;code&quot;: 0,
+    &quot;data&quot;: null
+}
+</code></pre>
+
+<h4 id="_23">异常</h4>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>9</td>
+<td>无权操作</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="42">4.2 审核拒绝会议</h3>
+<pre class="codehilite"><code class="linenums">[POST] /api/conference/rejectConference/&lt;cid&gt;
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p><code>admin</code>使用该方法拒绝会议申请</p>
+</div>
+<h4 id="_24"><strong>请求</strong></h4>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cid</td>
+<td>String</td>
+<td>false</td>
+<td>1</td>
+<td>url路径参数</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_25"><strong>响应</strong></h4>
+<p><strong>服务间调用</strong></p>
+<ul>
+<li>调用 <strong>NotificationService</strong> 服务获得发送异步通信消息，告诉会议发起人</li>
+</ul>
+<p><code>Your Conference xxx has been rejected!</code></p>
+<p><strong>自动响应</strong></p>
+<p><code>status='reject'</code></p>
+<pre class="codehilite"><code class="language-text linenums">{
+    &quot;code&quot;: 0,
+    &quot;data&quot;: null
+}
+</code></pre>
+
+<hr />
+<h3 id="43">4.3 获取未被审核的会议信息</h3>
+<pre class="codehilite"><code class="linenums">[GET] /api/conference/getUncheckedConference
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>使用该方法通过会议状态获取所有未被审核的会议， <u>管理员调用</u></p>
+</div>
+<h4 id="_26"><strong>请求</strong></h4>
+<p>无需参数</p>
+<h4 id="_27"><strong>响应</strong></h4>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0,
+    &quot;data&quot;: [
+        {
+            &quot;_id&quot;: 1,
+            &quot;shortenForm&quot;: CHI,
+            &quot;fullName&quot;:ACM Conference on Human Factors in Computing Systems,
+             ……
+            &quot;status&quot;: 'init',
+             ……
+        }//返回对应记录信息
+    ]
+}
+</code></pre>
+
+<h4 id="_28">异常</h4>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>无权操作</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5-api">5. 服务间通信API</h2>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>服务间API仅供服务间通信调用，通过设置白名单阻止外来源访问</p>
+</div>
+<h3 id="51">5.1 添加审稿人</h3>
+<pre class="codehilite"><code class="language-text linenums">[POST] /addPcMember/&lt;cid&gt;
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>使用该方法添加审稿人, 在 <strong>InvitationService</strong> 中被邀请者同意时调用</p>
+</div>
+<h4 id="_29"><strong>请求</strong></h4>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pcMember</td>
+<td>List</td>
+<td>false</td>
+<td>[uid1, uid2]</td>
+<td>post参数</td>
+</tr>
+<tr>
+<td>cid</td>
+<td>String</td>
+<td>false</td>
+<td>'1'</td>
+<td>url参数</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_30"><strong>响应</strong></h4>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0,
+    &quot;data&quot;: null
+}
+</code></pre>
+
+<hr />
+<h3 id="52-id">5.2 通过Id组获取会议信息</h3>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>使用该方法根据id获取会议信息 </p>
+</div>
+<pre class="codehilite"><code class="linenums">[POST] /api/user/findConferenceByIds
+</code></pre>
+
+<h4 id="_31">请求</h4>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ids</td>
+<td>List</td>
+<td>false</td>
+<td>["id1", 'id2']</td>
+<td>url路径参数</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_32">响应</h4>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0,
+    &quot;data&quot;: {'id1': {conferenceInfo}, 'id2': {conferenceInfo}} // 返回对应的record map
+}
+</code></pre>
+
+<hr />
+<h2 id="6">6. 心跳检测</h2>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>心跳检测API针对注册中心 <strong>consul</strong> 调用，对服务的健康进行自动检测</p>
+</div>
+<pre class="codehilite"><code class="linenums">[GET] /api/conference/check
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../InvitationService/" class="btn btn-neutral float-right" title="InvitationService">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../UserService/" class="btn btn-neutral" title="UserService"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>2020 StarChair | fduxuan with Group 10 All Right Reserved</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../UserService/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../InvitationService/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+
+</body>
+</html>

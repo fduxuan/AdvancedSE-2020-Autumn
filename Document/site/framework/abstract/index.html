@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="fduxuan">
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>前言 - StarChair 重构版文档 By Group 10</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../../css/extra.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "\u524d\u8a00";
+    var mkdocs_page_input_path = "framework/abstract.md";
+    var mkdocs_page_url = "/docs/framework/abstract/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> StarChair 重构版文档 By Group 10</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="tocbase current">
+    
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../..">目录</a>
+  </li>
+    
+      
+  <li class="navtree toctree-l1 label">
+    <p class="caption">整体架构</p>
+  </li>
+
+
+  
+
+  
+    <li class="navtree toctree-l1 group">
+      <ul class="navtree subnav-l1 current">
+          
+
+
+  
+    
+    <li class="navtree toctree-l2 page current">
+      <a class="current" href="./">
+        前言
+          <span class="toctree-expand"></span>
+      </a>
+    </li>
+    
+      
+
+
+
+  <li class="toctree-l2 current">
+    <ul class="subnav-l2 current">
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#1">1. 基本介绍</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#2">2. 贡献</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#3">3. 关于我们</a>
+        </li>
+    
+    </ul>
+  </li>
+
+
+  
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../framework/">基本框架</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../breakdown/">业务拆分思路</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../messageQueue/">消息队列</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../deploy/">注册中心与部署</a>
+  </li>
+        
+      </ul>
+    </li>
+    
+      
+  <li class="navtree toctree-l1 label">
+    <p class="caption">服务端文档</p>
+  </li>
+
+
+  
+
+  
+    <li class="navtree toctree-l1 group">
+      <ul class="navtree subnav-l1 current">
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/errors/">接口标准规范</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/UserService/">UserService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/ConferenceService/">ConferenceService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/InvitationService/">InvitationService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/DraftService/">DraftService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/ReviewProcessService/">ReviewProcessService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/DiscussService/">DiscussService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/NotificationService/">NotificationService</a>
+  </li>
+        
+      </ul>
+    </li>
+    
+      
+  <li class="navtree toctree-l1 label">
+    <p class="caption">前端文档</p>
+  </li>
+
+
+  
+
+  
+    <li class="navtree toctree-l1 group">
+      <ul class="navtree subnav-l1 current">
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../frontend/procedure/">操作流程</a>
+  </li>
+        
+      </ul>
+    </li>
+    
+  </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">StarChair 重构版文档 By Group 10</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>整体架构 &raquo;</li>
+        
+      
+    
+    <li>前言</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="_1">前言</h1>
+<h2 id="1">1. 基本介绍</h2>
+<p>在这门课程作业中，由于小组成员对JAVA语言都 <del>不是很熟悉</del> <mark>很不熟悉</mark>，导致前期效率较为低下且比较”痛苦“。</p>
+<div class="admonition danger">
+<p class="admonition-title">Danger</p>
+<p>"为什么这里空指针乱飞？"，"不知道，这个maven怎么也编译不了TAT"<br></p>
+</div>
+<p>我们曾一度打算用自己熟悉的语言来重构整个项目，但是由于<strong>整体项目较大</strong>，重构需要不少的工作量，对于小组的<strong>协调分工</strong>有着较高的要求，以及需要面对<strong>更多的未知挑战</strong>，因此直到第二次作业布置前，我们都尚未将重构的想法付诸现实。</p>
+<p>在第二次作业布置已经课堂分享点评后，我们认为这门课作业的性质是：<strong>让我们能够完整的走一遍微服务的流程</strong>。</p>
+<p>也因此，为了能够走得更好，了解得更深入，在这次的作业中收获更多（<del>无法避免不如享受</del>）,经过小组讨论，我们最终决定在重新拆分的时候，<mark>将整个服务重新按照需求文档，从0开始完整的实现一遍。</mark></p>
+<hr />
+<h2 id="2">2. 贡献</h2>
+<p>在重构过程中，我们实现了以下贡献：</p>
+<ul>
+<li>使用python flask重构了整个后端</li>
+<li>对原本的H2内存数据库做了优化，改成了真实存在的mongo型数据库</li>
+<li>采用了全新的consul服务作为注册中心进行服务注册和发现</li>
+<li>实现服务间通信</li>
+<li>使用RabbitMq-Python 构建消息队列进行异步通信，与前端采用websocket相连接</li>
+<li><mark>重构整个前端</mark></li>
+</ul>
+<hr />
+<h2 id="3">3. 关于我们</h2>
+<p>我们是高级软件工程第十组：</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>该项目由我们十个人共同完成</p>
+</div>
+<ul>
+<li><strong>组长：</strong>方煊杰</li>
+<li><strong>组员：</strong>蒋艳琪，张云哲，梁佳音，徐艺文，梁依帆，曾瑞莹，王威，叶子杨，韦伟兴</li>
+</ul>
+<p>​    </p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../framework/" class="btn btn-neutral float-right" title="基本框架">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../.." class="btn btn-neutral" title="目录"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>2020 StarChair | fduxuan with Group 10 All Right Reserved</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../.." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../framework/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+
+</body>
+</html>

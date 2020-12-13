@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="fduxuan">
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>NotificationService - StarChair 重构版文档 By Group 10</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../../css/extra.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "NotificationService";
+    var mkdocs_page_input_path = "API/NotificationService.md";
+    var mkdocs_page_url = "/docs/API/NotificationService/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> StarChair 重构版文档 By Group 10</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="tocbase current">
+    
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../..">目录</a>
+  </li>
+    
+      
+  <li class="navtree toctree-l1 label">
+    <p class="caption">整体架构</p>
+  </li>
+
+
+  
+
+  
+    <li class="navtree toctree-l1 group">
+      <ul class="navtree subnav-l1 current">
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../framework/abstract/">前言</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../framework/framework/">基本框架</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../framework/breakdown/">业务拆分思路</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../framework/messageQueue/">消息队列</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../framework/deploy/">注册中心与部署</a>
+  </li>
+        
+      </ul>
+    </li>
+    
+      
+  <li class="navtree toctree-l1 label">
+    <p class="caption">服务端文档</p>
+  </li>
+
+
+  
+
+  
+    <li class="navtree toctree-l1 group">
+      <ul class="navtree subnav-l1 current">
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../errors/">接口标准规范</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../UserService/">UserService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../ConferenceService/">ConferenceService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../InvitationService/">InvitationService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../DraftService/">DraftService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../ReviewProcessService/">ReviewProcessService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../DiscussService/">DiscussService</a>
+  </li>
+        
+          
+
+
+  
+    
+    <li class="navtree toctree-l2 page current">
+      <a class="current" href="./">
+        NotificationService
+          <span class="toctree-expand"></span>
+      </a>
+    </li>
+    
+      
+
+
+
+  <li class="toctree-l2 current">
+    <ul class="subnav-l2 current">
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#1">1. 数据库字段参考</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#2-websocket">2. websocket相关</a>
+        </li>
+    
+      
+          
+
+  <li class="toctree-l3">
+    <a href="#2-api">
+      2. 面向用户API
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l3">
+    <ul class="subnav-l3 toc-hidden">
+    
+      
+        <li class="toctree-l4">
+          <a class="toctree-l5" href="#21-id">2.1 通过Id获取消息信息</a>
+        </li>
+    
+      
+        <li class="toctree-l4">
+          <a class="toctree-l5" href="#_1">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l4">
+          <a class="toctree-l5" href="#_2">响应</a>
+        </li>
+    
+      
+        <li class="toctree-l4">
+          <a class="toctree-l5" href="#_3">异常</a>
+        </li>
+    
+      
+        <li class="toctree-l4">
+          <a class="toctree-l5" href="#22-id">2.2 通过用户Id获取用户收到的信息</a>
+        </li>
+    
+      
+        <li class="toctree-l4">
+          <a class="toctree-l5" href="#_4">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l4">
+          <a class="toctree-l5" href="#_5">响应</a>
+        </li>
+    
+      
+        <li class="toctree-l4">
+          <a class="toctree-l5" href="#23">2.3 修改消息状态</a>
+        </li>
+    
+      
+        <li class="toctree-l4">
+          <a class="toctree-l5" href="#_6">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l4">
+          <a class="toctree-l5" href="#_7">响应</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l3">
+    <a href="#3-api">
+      3. 服务间通信API
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l3">
+    <ul class="subnav-l3 toc-hidden">
+    
+      
+        <li class="toctree-l4">
+          <a class="toctree-l5" href="#31">3.1 发送消息</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#4">4. 心跳检测</a>
+        </li>
+    
+    </ul>
+  </li>
+
+
+  
+        
+      </ul>
+    </li>
+    
+      
+  <li class="navtree toctree-l1 label">
+    <p class="caption">前端文档</p>
+  </li>
+
+
+  
+
+  
+    <li class="navtree toctree-l1 group">
+      <ul class="navtree subnav-l1 current">
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../frontend/procedure/">操作流程</a>
+  </li>
+        
+      </ul>
+    </li>
+    
+  </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">StarChair 重构版文档 By Group 10</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>服务端文档 &raquo;</li>
+        
+      
+    
+    <li>NotificationService</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="notificationservice">NotificationService</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>port</strong>: 5007 <br> <mark>rabbitmq+websocket</mark> 实现的异步消息通信  </p>
+</div>
+<h2 id="1">1. 数据库字段参考</h2>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>receiver</td>
+<td>String</td>
+<td>false</td>
+<td>hui789cx</td>
+<td>user id</td>
+</tr>
+<tr>
+<td>message</td>
+<td>String</td>
+<td>false</td>
+<td>你的论文录用结果已发布</td>
+<td></td>
+</tr>
+<tr>
+<td>status</td>
+<td>String</td>
+<td>false</td>
+<td>read</td>
+<td>read/unread 表示已读/未读</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-websocket">2. websocket相关</h2>
+<pre class="codehilite"><code class="linenums">ws = new WebSocket('ws://&lt;HOST&gt;:&lt;PORT&gt;/ws/'+uid);
+ws.onopen = function (event) {
+    console.log('WebSocket连接成功    状态码：' + ws.readyState)
+}
+
+ws.onerror = function (event) {
+    console.log('WebSocket连接发生错误   状态码：' + ws.readyState)
+}
+
+ws.onclose = function (event) {
+    console.log('WebSocket连接关闭')
+}
+
+ws.onmessage = function (event) {
+    console.log(&quot;接收到WebSocket服务器消息: &quot; + event.data);
+};
+
+// 监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+window.onbeforeunload = function (event) {
+    ws.close();
+    ws = null;
+}
+</code></pre>
+
+<hr />
+<h2 id="2-api">2. 面向用户API</h2>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>以下所有api均需登录后方可调用，否则返回<code>{'code': 8, "data": "没有登录"}</code></p>
+</div>
+<h4 id="21-id">2.1 通过Id获取消息信息</h4>
+<pre class="codehilite"><code class="linenums">[GET] /api/notification/getNotificationById/&lt;nid&gt;
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+</div>
+<p>使用该方法根据id获取消息信息详情</p>
+<h4 id="_1"><strong>请求</strong></h4>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nid</td>
+<td>String</td>
+<td>false</td>
+<td>MjAyMC0xMS0zMCAxOTo1MDo0MS4wNDg0OTRQkpIWN4QjYmVCf3TNHpLfy3wBJ_vrWovN2hZKpj0ZTA</td>
+<td>url路径参数</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_2"><strong>响应</strong></h4>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0,
+    &quot;data&quot;: {&quot;_id&quot;: &quot;MjAyMC0xMS0zMCAxOTo1MDo0MS4wNDg0OTRQkpIWN4QjYmVCf3TNHpLfy3wBJ_vrWovN2hZKpj0ZTA&quot;, &quot;receiver&quot;: &quot;hui789cx&quot;, ...} // 返回对应的record
+}
+</code></pre>
+
+<h4 id="_3">异常</h4>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3</td>
+<td>没有该记录</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h4 id="22-id">2.2 通过用户Id获取用户收到的信息</h4>
+<pre class="codehilite"><code class="linenums">[GET] /api/notification/getNotificationByUser/&lt;uid&gt;
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+</div>
+<p>使用该方法根据用户Id获取用户收到的消息 </p>
+<h4 id="_4"><strong>请求</strong></h4>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uid</td>
+<td>String</td>
+<td>false</td>
+<td>hui789cx</td>
+<td>url路径参数</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_5"><strong>响应</strong></h4>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0,
+    &quot;data&quot;: [{&quot;_id&quot;: &quot;MjAyMC0xMS0zMCAxOTo1MDo0MS4wNDg0OTRQkpIWN4QjYmVCf3TNHpLfy3wBJ_vrWovN2hZKpj0ZTA&quot;, &quot;receiver&quot;: &quot;hui789cx&quot;, ...}, {&quot;_id&quot;: &quot;&quot;}] // 返回对应的record list
+}
+</code></pre>
+
+<hr />
+<h4 id="23">2.3 修改消息状态</h4>
+<pre class="codehilite"><code class="linenums"> [POST] /changeNotificationStatus
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+</div>
+<p>使用该方法修改消息的状态为已读/未读  </p>
+<h4 id="_6"><strong>请求</strong></h4>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nid</td>
+<td>String</td>
+<td>false</td>
+<td>"MjAyMC0xMS0zMCAxOTo1MDo0MS4wNDg0OTRQkpIWN4QjYmVCf3TNHpLfy3wBJ_vrWovN2hZKpj0ZTA",</td>
+<td></td>
+</tr>
+<tr>
+<td>status</td>
+<td>String</td>
+<td>false</td>
+<td>"read"</td>
+<td>"read"/"unread"</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_7"><strong>响应</strong></h4>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0,
+    &quot;data&quot;: null
+}
+</code></pre>
+
+<hr />
+<h2 id="3-api">3. 服务间通信API</h2>
+<h3 id="31">3.1 发送消息</h3>
+<hr />
+<pre class="codehilite"><code class="linenums"> [POST] /api/notification/send 
+</code></pre>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+</div>
+<p>使用该方法向指定用户对应的消息队列发送一条消息 </p>
+<p><strong>请求</strong></p>
+<pre class="codehilite"><code class="linenums">{
+    &quot;uid_list&quot;: [&quot;hui789cx&quot;, &quot;kg7oa8xv&quot;],
+    &quot;message&quot;: &quot;你的论文录用结果已发布&quot;
+}
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uid_list</td>
+<td>List\&lt;String></td>
+<td>false</td>
+<td>["hui789cx", "kg7oa8xv"]</td>
+<td></td>
+</tr>
+<tr>
+<td>message</td>
+<td>String</td>
+<td>false</td>
+<td>"你的论文录用结果已发布"</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>响应</strong></p>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0, 
+    &quot;data&quot;: [&quot;inserted_id1&quot;, &quot;inserted_id2&quot;]
+}
+</code></pre>
+
+<h2 id="4">4. 心跳检测</h2>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>心跳检测API针对注册中心 <strong>consul</strong> 调用，对服务的健康进行自动检测</p>
+</div>
+<pre class="codehilite"><code class="linenums">[GET] /api/notification/check
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../frontend/procedure/" class="btn btn-neutral float-right" title="操作流程">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../DiscussService/" class="btn btn-neutral" title="DiscussService"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>2020 StarChair | fduxuan with Group 10 All Right Reserved</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../DiscussService/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../../frontend/procedure/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+site_name: StarChair 重构版文档 By Group 10
+site_url: http://106.14.244.24:3003/docs
+site_author: fduxuan
+site_description: StarChair重构版中文完整文档
+copyright: 2020 StarChair | fduxuan with Group 10 All Right Reserved
+#theme: readthedocs
+theme:
+  name: 'rtd-dropdown'
+
+  #??? abstract "摘要，总结" abstract, summary, tldr
+  #??? tip "贴士" tip, hint, important
+  #??? note "注释，代码片段，说明" note, snippet, seealso
+  #??? example "举例，列表" example
+  #??? quote "引用，参考链接" quote, cite
+  #??? info "提示，TODO" info, todo
+  #??? warning "警告" warning, caution, attention
+  #??? danger "危险" danger, error
+  #??? success "成功，勾选，完成" success, check, done
+  #??? fail "失败" failure, fail, missing
+  #??? faq "问题，疑问，帮助" question, help, faq
+  #??? bug "BUG" bug
+markdown_extensions:
+    # attention, caution, danger, error, hint, important, note, tip, and warning。
+    - admonition
+    - pymdownx.tilde
+    - pymdownx.mark
+    - codehilite: # 代码高亮，显示行号
+        guess_lang: false
+        linenums: true
+
+
+extra_css:
+  - css/extra.css
+nav:
+  - 目录: index.md
+  - 整体架构:
+      - 前言: framework/abstract.md
+      - 基本框架: framework/framework.md
+      - 业务拆分思路: framework/breakdown.md
+      - 消息队列: framework/messageQueue.md
+      - 注册中心与部署: framework/deploy.md
+  - 服务端文档:
+      - 接口标准规范: API/errors.md
+      - UserService: API/UserService.md
+      - ConferenceService: API/ConferenceService.md
+      - InvitationService: API/InvitationService.md
+      - DraftService: API/DraftService.md
+      - ReviewProcessService: API/ReviewProcessService.md
+      - DiscussService: API/DiscussService.md
+      - NotificationService: API/NotificationService.md
+
+  - 前端文档:
+      - 操作流程: frontend/procedure.md

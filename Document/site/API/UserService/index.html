@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="fduxuan">
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>UserService - StarChair 重构版文档 By Group 10</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../../css/extra.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "UserService";
+    var mkdocs_page_input_path = "API/UserService.md";
+    var mkdocs_page_url = "/docs/API/UserService/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> StarChair 重构版文档 By Group 10</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="tocbase current">
+    
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../..">目录</a>
+  </li>
+    
+      
+  <li class="navtree toctree-l1 label">
+    <p class="caption">整体架构</p>
+  </li>
+
+
+  
+
+  
+    <li class="navtree toctree-l1 group">
+      <ul class="navtree subnav-l1 current">
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../framework/abstract/">前言</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../framework/framework/">基本框架</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../framework/breakdown/">业务拆分思路</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../framework/messageQueue/">消息队列</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../framework/deploy/">注册中心与部署</a>
+  </li>
+        
+      </ul>
+    </li>
+    
+      
+  <li class="navtree toctree-l1 label">
+    <p class="caption">服务端文档</p>
+  </li>
+
+
+  
+
+  
+    <li class="navtree toctree-l1 group">
+      <ul class="navtree subnav-l1 current">
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../errors/">接口标准规范</a>
+  </li>
+        
+          
+
+
+  
+    
+    <li class="navtree toctree-l2 page current">
+      <a class="current" href="./">
+        UserService
+          <span class="toctree-expand"></span>
+      </a>
+    </li>
+    
+      
+
+
+
+  <li class="toctree-l2 current">
+    <ul class="subnav-l2 current">
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#1">1. 数据库字段参考</a>
+        </li>
+    
+      
+          
+
+  <li class="toctree-l3">
+    <a href="#2-api">
+      2. 面向用户API
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l3">
+    <ul class="subnav-l3 toc-hidden">
+    
+      
+          
+
+  <li class="toctree-l4 current with-children">
+    <a href="#21">
+      2.1 登录
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4 current">
+    <ul class="subnav-l4 current">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_1">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_2">响应</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_3">异常</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l4">
+    <a href="#22">
+      2.2 注销
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4">
+    <ul class="subnav-l4 toc-hidden">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_4">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_5">响应</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_6">异常</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l4">
+    <a href="#23">
+      2.3 注册
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4">
+    <ul class="subnav-l4 toc-hidden">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_7">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_8">响应</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_9">异常</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l4">
+    <a href="#24">
+      2.4 当前用户信息
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4">
+    <ul class="subnav-l4 toc-hidden">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_10">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_11">响应</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_12">异常</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l4">
+    <a href="#25-id">
+      2.5 通过Id获取用户详细信息
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4">
+    <ul class="subnav-l4 toc-hidden">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_13">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_14">响应</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_15">异常</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l4">
+    <a href="#26-username">
+      2.6 通过username查询用户信息
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4">
+    <ul class="subnav-l4 toc-hidden">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_16">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_17">响应</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_18">异常</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l4">
+    <a href="#27">
+      2.7 管理员判断
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4">
+    <ul class="subnav-l4 toc-hidden">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_19">异常</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l3">
+    <a href="#3-api">
+      3. 服务间通信API
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l3">
+    <ul class="subnav-l3 toc-hidden">
+    
+      
+          
+
+  <li class="toctree-l4 current with-children">
+    <a href="#31-id">
+      3.1 通过Id组获取用户信息
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4 current">
+    <ul class="subnav-l4 current">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_20">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_21">响应</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+    </ul>
+  </li>
+
+      
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#4">4. 心跳检测</a>
+        </li>
+    
+    </ul>
+  </li>
+
+
+  
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../ConferenceService/">ConferenceService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../InvitationService/">InvitationService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../DraftService/">DraftService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../ReviewProcessService/">ReviewProcessService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../DiscussService/">DiscussService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../NotificationService/">NotificationService</a>
+  </li>
+        
+      </ul>
+    </li>
+    
+      
+  <li class="navtree toctree-l1 label">
+    <p class="caption">前端文档</p>
+  </li>
+
+
+  
+
+  
+    <li class="navtree toctree-l1 group">
+      <ul class="navtree subnav-l1 current">
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../frontend/procedure/">操作流程</a>
+  </li>
+        
+      </ul>
+    </li>
+    
+  </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">StarChair 重构版文档 By Group 10</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>服务端文档 &raquo;</li>
+        
+      
+    
+    <li>UserService</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="userservice">UserService</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>port</strong>: 5001 <br></p>
+</div>
+<h2 id="1">1. 数据库字段参考</h2>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>username</td>
+<td>String</td>
+<td>false</td>
+<td>xuan</td>
+</tr>
+<tr>
+<td>fullname</td>
+<td>String</td>
+<td>false</td>
+<td>Xuanjie Fang</td>
+</tr>
+<tr>
+<td>password</td>
+<td>String</td>
+<td>false</td>
+<td>123456</td>
+</tr>
+<tr>
+<td>email</td>
+<td>String</td>
+<td>false</td>
+<td>123@abc.com</td>
+</tr>
+<tr>
+<td>company</td>
+<td>String</td>
+<td>false</td>
+<td>fudan</td>
+</tr>
+<tr>
+<td>area</td>
+<td>String</td>
+<td>false</td>
+<td>shanghai</td>
+</tr>
+<tr>
+<td>admin</td>
+<td>Boolean</td>
+<td>false</td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<hr />
+<h2 id="2-api">2. 面向用户API</h2>
+<h3 id="21">2.1 登录</h3>
+<pre class="codehilite"><code class="linenums"> [POST] /api/user/login 
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>使用该方法进行登录</p>
+</div>
+<h4 id="_1">请求</h4>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>username</td>
+<td>String</td>
+<td>false</td>
+<td>"xuan"</td>
+<td></td>
+</tr>
+<tr>
+<td>password</td>
+<td>String</td>
+<td>false</td>
+<td>"123456"</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="_2">响应</h4>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0, 
+    &quot;data&quot;: {username:xxx, fullname:xxx...}(当前用户信息)
+}
+</code></pre>
+
+<h4 id="_3">异常</h4>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td>用户名或密码错误</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="22">2.2 注销</h3>
+<pre class="codehilite"><code class="linenums">[POST] /api/user/logout
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>使用该方法退出登录</p>
+</div>
+<h4 id="_4">请求</h4>
+<p>无需参数（利用session）  </p>
+<h4 id="_5">响应</h4>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0,
+    &quot;data&quot;: null
+}
+</code></pre>
+
+<h4 id="_6">异常</h4>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8</td>
+<td>用户名或密码错误</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="23">2.3 注册</h3>
+<pre class="codehilite"><code class="linenums">[POST] /api/user/register
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>使用该方法注册新账户（由于原starchair要求所有字段必填，此处同样设置）  </p>
+</div>
+<h4 id="_7">请求</h4>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>username</td>
+<td>String</td>
+<td>false</td>
+<td>xuan</td>
+<td></td>
+</tr>
+<tr>
+<td>fullname</td>
+<td>String</td>
+<td>false</td>
+<td>Xuanjie Fang</td>
+<td></td>
+</tr>
+<tr>
+<td>password</td>
+<td>String</td>
+<td>false</td>
+<td>123456</td>
+<td></td>
+</tr>
+<tr>
+<td>email</td>
+<td>String</td>
+<td>false</td>
+<td>123@abc.com</td>
+<td></td>
+</tr>
+<tr>
+<td>company</td>
+<td>String</td>
+<td>false</td>
+<td>fudan</td>
+<td></td>
+</tr>
+<tr>
+<td>area</td>
+<td>String</td>
+<td>false</td>
+<td>shanghai</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="_8">响应</h4>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0,
+    &quot;data&quot;: &quot;user_id&quot;(返回注册后生成user的id)
+}
+</code></pre>
+
+<h4 id="_9">异常</h4>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>9</td>
+<td>注册信息不完整</td>
+</tr>
+<tr>
+<td>5</td>
+<td>已存在该用户名</td>
+</tr>
+<tr>
+<td>6</td>
+<td>已存在该邮箱</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="24">2.4 当前用户信息</h3>
+<pre class="codehilite"><code class="linenums">[GET] /api/user/info
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>使用该方法获得自己的信息</p>
+</div>
+<h4 id="_10">请求</h4>
+<p>无需参数，根据session自动获得</p>
+<h4 id="_11">响应</h4>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0,
+    &quot;data&quot;: {...} 用户的个人信息
+}
+</code></pre>
+
+<h4 id="_12">异常</h4>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8</td>
+<td>没有登录</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="25-id">2.5 通过Id获取用户详细信息</h3>
+<pre class="codehilite"><code class="linenums">[GET] /api/user/getUserById/&lt;uid&gt;
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>使用该方法根据id获取用户详细信息</p>
+</div>
+<h4 id="_13">请求</h4>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uid</td>
+<td>String</td>
+<td>false</td>
+<td>hui789cx</td>
+<td>url路径参数</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_14">响应</h4>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0,
+    &quot;data&quot;: {&quot;_id&quot;: &quot;hui789cx&quot;, &quot;username&quot;: &quot;xuan&quot;, ...} // 返回对应的record
+}
+</code></pre>
+
+<h4 id="_15">异常</h4>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3</td>
+<td>没有该记录</td>
+</tr>
+<tr>
+<td>8</td>
+<td>没有登录</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="26-username">2.6 通过username查询用户信息</h3>
+<pre class="codehilite"><code class="linenums">[POST] /api/user/findUserByName
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>使用该方法根据fullname进行模糊查询</p>
+</div>
+<h4 id="_16">请求</h4>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fullname</td>
+<td>String</td>
+<td>True</td>
+<td>xuan</td>
+<td>url路径参数</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_17">响应</h4>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0,
+    &quot;data&quot;: {&quot;_id&quot;: &quot;hui789cx&quot;, &quot;username&quot;: &quot;xuan&quot;, ...} // 返回对应的record
+}
+</code></pre>
+
+<h4 id="_18">异常</h4>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8</td>
+<td>没有登录</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="27">2.7 管理员判断</h3>
+<pre class="codehilite"><code class="linenums"> [GET] /api/user/isAdmin
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>使用该方法判断用户是否为管理员  </p>
+</div>
+<p><strong>请求</strong> </p>
+<p>无需参数（利用session） </p>
+<p><strong>响应</strong></p>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0,
+    &quot;data&quot;: false // 返回true/false
+}
+</code></pre>
+
+<h4 id="_19">异常</h4>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8</td>
+<td>没有登录</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-api">3. 服务间通信API</h2>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>服务间API仅供服务间通信调用，通过设置白名单阻止外来源访问</p>
+</div>
+<h3 id="31-id">3.1 通过Id组获取用户信息</h3>
+<pre class="codehilite"><code class="linenums">[POST] /api/user/findUserByIds
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>使用该方法根据id获取用户信息 </p>
+</div>
+<h4 id="_20">请求</h4>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ids</td>
+<td>List</td>
+<td>false</td>
+<td>["id1", 'id2']</td>
+<td>url路径参数</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_21">响应</h4>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0,
+    &quot;data&quot;: {'id1': {userinfo}, 'id2': {userinfo}} // 返回对应的record map
+}
+</code></pre>
+
+<hr />
+<h2 id="4">4. 心跳检测</h2>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>心跳检测API针对注册中心 <strong>consul</strong> 调用，对服务的健康进行自动检测</p>
+</div>
+<pre class="codehilite"><code class="linenums">[GET] /api/user/check
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../ConferenceService/" class="btn btn-neutral float-right" title="ConferenceService">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../errors/" class="btn btn-neutral" title="接口标准规范"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>2020 StarChair | fduxuan with Group 10 All Right Reserved</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../errors/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../ConferenceService/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="fduxuan">
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>DraftService - StarChair 重构版文档 By Group 10</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../../css/extra.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "DraftService";
+    var mkdocs_page_input_path = "API/DraftService.md";
+    var mkdocs_page_url = "/docs/API/DraftService/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> StarChair 重构版文档 By Group 10</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="tocbase current">
+    
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../..">目录</a>
+  </li>
+    
+      
+  <li class="navtree toctree-l1 label">
+    <p class="caption">整体架构</p>
+  </li>
+
+
+  
+
+  
+    <li class="navtree toctree-l1 group">
+      <ul class="navtree subnav-l1 current">
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../framework/abstract/">前言</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../framework/framework/">基本框架</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../framework/breakdown/">业务拆分思路</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../framework/messageQueue/">消息队列</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../framework/deploy/">注册中心与部署</a>
+  </li>
+        
+      </ul>
+    </li>
+    
+      
+  <li class="navtree toctree-l1 label">
+    <p class="caption">服务端文档</p>
+  </li>
+
+
+  
+
+  
+    <li class="navtree toctree-l1 group">
+      <ul class="navtree subnav-l1 current">
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../errors/">接口标准规范</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../UserService/">UserService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../ConferenceService/">ConferenceService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../InvitationService/">InvitationService</a>
+  </li>
+        
+          
+
+
+  
+    
+    <li class="navtree toctree-l2 page current">
+      <a class="current" href="./">
+        DraftService
+          <span class="toctree-expand"></span>
+      </a>
+    </li>
+    
+      
+
+
+
+  <li class="toctree-l2 current">
+    <ul class="subnav-l2 current">
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#1">1. 数据库字段参考</a>
+        </li>
+    
+      
+          
+
+  <li class="toctree-l3">
+    <a href="#2-api">
+      2. 面向用户API
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l3">
+    <ul class="subnav-l3 toc-hidden">
+    
+      
+          
+
+  <li class="toctree-l4 current with-children">
+    <a href="#21">
+      2.1 添加新的投稿
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4 current">
+    <ul class="subnav-l4 current">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_1">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_2">响应</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l4">
+    <a href="#22">
+      2.2 修改已提交的投稿
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4">
+    <ul class="subnav-l4 toc-hidden">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_3">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_4">响应</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_5">异常</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l4">
+    <a href="#23">
+      2.3 上传稿件
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4">
+    <ul class="subnav-l4 toc-hidden">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_6">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_7">响应</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l4">
+    <a href="#24">
+      2.4 下载/预览稿件
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4">
+    <ul class="subnav-l4 toc-hidden">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_8">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_9">响应</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l4">
+    <a href="#25-id">
+      2.5 通过稿件Id获取信息
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4">
+    <ul class="subnav-l4 toc-hidden">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_10">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_11">响应</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_12">异常</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l4">
+    <a href="#26">
+      2.6 获取自己提交论文
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4">
+    <ul class="subnav-l4 toc-hidden">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_13">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_14">响应</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l3">
+    <a href="#3-api">
+      3. 服务间通信API
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l3">
+    <ul class="subnav-l3 toc-hidden">
+    
+      
+          
+
+  <li class="toctree-l4 current with-children">
+    <a href="#31-id">
+      3.1 通过Id组获取投稿信息
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4 current">
+    <ul class="subnav-l4 current">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_15">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_16">响应</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l4">
+    <a href="#32">
+      3.2 获取一个会议下所有稿件
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4">
+    <ul class="subnav-l4 toc-hidden">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_17">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_18">响应</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+          
+
+  <li class="toctree-l4">
+    <a href="#33">
+      3.3 获得用户投的所有稿件
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l4">
+    <ul class="subnav-l4 toc-hidden">
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_19">请求</a>
+        </li>
+    
+      
+        <li class="toctree-l5">
+          <a class="toctree-l6" href="#_20">响应</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+    </ul>
+  </li>
+
+      
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#4">4. 心跳检测</a>
+        </li>
+    
+    </ul>
+  </li>
+
+
+  
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../ReviewProcessService/">ReviewProcessService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../DiscussService/">DiscussService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../NotificationService/">NotificationService</a>
+  </li>
+        
+      </ul>
+    </li>
+    
+      
+  <li class="navtree toctree-l1 label">
+    <p class="caption">前端文档</p>
+  </li>
+
+
+  
+
+  
+    <li class="navtree toctree-l1 group">
+      <ul class="navtree subnav-l1 current">
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../frontend/procedure/">操作流程</a>
+  </li>
+        
+      </ul>
+    </li>
+    
+  </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">StarChair 重构版文档 By Group 10</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>服务端文档 &raquo;</li>
+        
+      
+    
+    <li>DraftService</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="draftservice">DraftService</h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>port</strong>: 5003</p>
+</div>
+<h2 id="1">1. 数据库字段参考</h2>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>title</td>
+<td>String</td>
+<td>false</td>
+<td>AN EXAMPLE</td>
+<td></td>
+</tr>
+<tr>
+<td>summary</td>
+<td>String</td>
+<td>false</td>
+<td>EXAMPLE SUMMARY</td>
+<td></td>
+</tr>
+<tr>
+<td>confId</td>
+<td>String</td>
+<td>false</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>contributor</td>
+<td>String</td>
+<td>false</td>
+<td>user_id</td>
+<td></td>
+</tr>
+<tr>
+<td>topics</td>
+<td>[String]</td>
+<td>false</td>
+<td>[HCI]</td>
+<td></td>
+</tr>
+<tr>
+<td>authors</td>
+<td>[String]</td>
+<td>false</td>
+<td>[username1, username2]</td>
+<td></td>
+</tr>
+<tr>
+<td>_id</td>
+<td>String</td>
+<td>false</td>
+<td>draft1</td>
+<td></td>
+</tr>
+<tr>
+<td>file_id</td>
+<td>String</td>
+<td>false</td>
+<td>12321313</td>
+<td>论文附件id，调用单独的update采用数据库chunk进行处理</td>
+</tr>
+</tbody>
+</table>
+<p><br><br></p>
+<hr />
+<h2 id="2-api">2. 面向用户API</h2>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>以下所有api均需登录后方可调用，否则返回<code>{'code': 8, "data": "没有登录"}</code></p>
+</div>
+<h3 id="21">2.1 添加新的投稿</h3>
+<pre class="codehilite"><code class="linenums"> [POST] /api/draft/submitDraft 
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>使用该方法进行论文的提交，<strong>除file之外的数据</strong></p>
+</div>
+<h4 id="_1"><strong>请求</strong></h4>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>title</td>
+<td>String</td>
+<td>false</td>
+<td>AN EXAMPLE</td>
+</tr>
+<tr>
+<td>summary</td>
+<td>String</td>
+<td>false</td>
+<td>EXAMPLE SUMMARY</td>
+</tr>
+<tr>
+<td>confId</td>
+<td>String</td>
+<td>false</td>
+<td>1</td>
+</tr>
+<tr>
+<td>topics</td>
+<td>[String]</td>
+<td>false</td>
+<td>[HCI]</td>
+</tr>
+<tr>
+<td>authors</td>
+<td>[user_name]</td>
+<td>false</td>
+<td>[fduxuan, sir]</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_2"><strong>响应</strong></h4>
+<p><strong>自动响应</strong></p>
+<p><code>status='init'</code>  <code>contributor='current_userid'</code></p>
+<p><strong>服务间调用</strong></p>
+<ul>
+<li>调用 <strong>NotificationService</strong> 服务获得发送异步通信消息，告诉会议发起人</li>
+</ul>
+<blockquote>
+<p><code>"{username} has submitted a draft to your conference {shortenForm}"</code></p>
+</blockquote>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0, 
+    &quot;data&quot;:null
+}
+</code></pre>
+
+<hr />
+<h3 id="22">2.2 修改已提交的投稿</h3>
+<pre class="codehilite"><code class="linenums"> [POST] /api/draft/modifyDraft 
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>使用该方法进行已提交论文的修改，<strong>除file之外的数据</strong></p>
+</div>
+<h4 id="_3"><strong>请求</strong></h4>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>_id</td>
+<td>String</td>
+<td>false</td>
+<td>draft1</td>
+</tr>
+<tr>
+<td>title</td>
+<td>String</td>
+<td>True</td>
+<td>AN EXAMPLE modified</td>
+</tr>
+<tr>
+<td>summary</td>
+<td>String</td>
+<td>True</td>
+<td>EXAMPLE SUMMARY</td>
+</tr>
+<tr>
+<td>topics</td>
+<td>[String]</td>
+<td>True</td>
+<td>[HCI]</td>
+</tr>
+<tr>
+<td>authors</td>
+<td>[User]</td>
+<td>True</td>
+<td>[username1, username2]</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_4">响应</h4>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0, 
+    &quot;data&quot;:null
+}
+</code></pre>
+
+<h4 id="_5">异常</h4>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>原因</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>没有权限</td>
+<td>非该文稿的提交者调用触发</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="23">2.3 上传稿件</h3>
+<pre class="codehilite"><code class="linenums"> [POST] /api/draft/upload
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>使用该方法进行上传文件，写入mongodb GridFsBucket，进行分块存储，避免文件过大导致的问题，同时更有可移植性</p>
+</div>
+<h4 id="_6"><strong>请求</strong></h4>
+<p>当前请求为 <strong>Form</strong> 格式</p>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>file</td>
+<td>FILE</td>
+<td>false</td>
+<td>{..........}</td>
+</tr>
+<tr>
+<td>draftId</td>
+<td>String</td>
+<td>False</td>
+<td>Draft1</td>
+</tr>
+<tr>
+<td>file_name</td>
+<td>String</td>
+<td>False</td>
+<td>"My_draft.pdf"</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_7">响应</h4>
+<pre class="codehilite"><code class="linenums">{
+        &quot;code&quot;: 0,
+        &quot;data&quot;: &quot;My_draft.pdf&quot;
+}
+</code></pre>
+
+<hr />
+<h3 id="24">2.4 下载/预览稿件</h3>
+<pre class="codehilite"><code class="linenums">[GET] /api/draft/download/&lt;fid&gt; 
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>使用该方法进行下载稿件，以文件流<code>application/octet-stream</code>形式传输，前端进行下载或者预览功能解析</p>
+</div>
+<h4 id="_8"><strong>请求</strong></h4>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fid</td>
+<td>String</td>
+<td>false</td>
+<td>File1</td>
+<td>url参数</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_9">响应</h4>
+<pre class="codehilite"><code class="linenums">{
+        &quot;code&quot;: 0,
+        &quot;data&quot;: {文件流}
+}
+</code></pre>
+
+<hr />
+<h3 id="25-id">2.5 通过稿件Id获取信息</h3>
+<pre class="codehilite"><code class="linenums">[GET] /api/draft/getDraftById/&lt;did&gt;
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>使用该方法根据论文id获取详细信息</p>
+</div>
+<h4 id="_10">请求</h4>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>did</td>
+<td>String</td>
+<td>false</td>
+<td>draft1</td>
+<td>url路径参数</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_11"><strong>响应</strong></h4>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0,
+    &quot;data&quot;:{
+      &quot;_id&quot;: draft1,
+      &quot;title&quot;: AN EXAMPLE,
+      &quot;summary&quot;: EXAMPLE SUMMARY modified,
+      &quot;file_id&quot;: &quot;fileId&quot;,
+      &quot;confId&quot;: 1,
+      &quot;contributor&quot;: Xuanjie Fang,
+      &quot;topics&quot;: [HCI],
+      &quot;authors&quot;: [&quot;xxx1&quot;, 'xxx2']
+    }
+}
+</code></pre>
+
+<h4 id="_12">异常</h4>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>原因</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3</td>
+<td>没有该纪律</td>
+<td>该投稿不存在</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="26">2.6 获取自己提交论文</h3>
+<pre class="codehilite"><code class="linenums">[GET] /api/draft/visible/&lt;cid&gt;
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>使用该方法获取一个会议下当前用户投递的所有稿件</p>
+</div>
+<h4 id="_13">请求</h4>
+<p>根据session自动获得当前用户id</p>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cid</td>
+<td>String</td>
+<td>false</td>
+<td>Conference1</td>
+<td>url路径参数</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_14">响应</h4>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0,
+    &quot;data&quot;:[draft_info, draft_info]
+}
+</code></pre>
+
+<hr />
+<h2 id="3-api">3. 服务间通信API</h2>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>服务间API仅供服务间通信调用，通过设置白名单阻止外来源访问</p>
+</div>
+<h3 id="31-id">3.1 通过Id组获取投稿信息</h3>
+<pre class="codehilite"><code class="linenums">[POST] /api/draft/findByIds
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>使用该方法获取id组覆盖的稿件信息</p>
+</div>
+<h4 id="_15">请求</h4>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ids</td>
+<td>List</td>
+<td>false</td>
+<td>[id1, id2, id3]</td>
+<td>url路径参数</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_16">响应</h4>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0,
+    &quot;data&quot;: {'id1': {draftInfo}, 'id2': {draftInfo}} // 返回对应的record map
+}
+</code></pre>
+
+<hr />
+<h3 id="32">3.2 获取一个会议下所有稿件</h3>
+<pre class="codehilite"><code class="linenums">[GET] /api/draft/getDraftByConference/&lt;cid&gt;
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>使用该方法根据会议id获取该会议上所有收到的论文相关信息</p>
+</div>
+<h4 id="_17"><strong>请求</strong></h4>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cid</td>
+<td>String</td>
+<td>false</td>
+<td>Conference1</td>
+<td>url路径参数</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_18"><strong>响应</strong></h4>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0,
+    &quot;data&quot;: [draft_info1, draft_info2...]
+}
+</code></pre>
+
+<hr />
+<h3 id="33">3.3 获得用户投的所有稿件</h3>
+<pre class="codehilite"><code class="linenums">[GET] /api/draft/getDraftByContributor/&lt;contributor&gt;
+</code></pre>
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>使用该方法根据用户id获得该用户投递的所有稿件，不做会议范围限制</p>
+</div>
+<h4 id="_19">请求</h4>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>可选</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>contributor</td>
+<td>string</td>
+<td>false</td>
+<td>user_id</td>
+<td>url路径参数</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_20"><strong>响应</strong></h4>
+<pre class="codehilite"><code class="linenums">{
+    &quot;code&quot;: 0,
+    &quot;data&quot;: [draft_info1, draft_info2...]
+}
+</code></pre>
+
+<hr />
+<h2 id="4">4. 心跳检测</h2>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>心跳检测API针对注册中心 <strong>consul</strong> 调用，对服务的健康进行自动检测</p>
+</div>
+<pre class="codehilite"><code class="linenums">[GET] /api/draft/check
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../ReviewProcessService/" class="btn btn-neutral float-right" title="ReviewProcessService">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../InvitationService/" class="btn btn-neutral" title="InvitationService"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>2020 StarChair | fduxuan with Group 10 All Right Reserved</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../InvitationService/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../ReviewProcessService/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+
+</body>
+</html>

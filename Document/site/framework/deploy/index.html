@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="fduxuan">
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>注册中心与部署 - StarChair 重构版文档 By Group 10</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../../css/extra.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "\u6ce8\u518c\u4e2d\u5fc3\u4e0e\u90e8\u7f72";
+    var mkdocs_page_input_path = "framework/deploy.md";
+    var mkdocs_page_url = "/docs/framework/deploy/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> StarChair 重构版文档 By Group 10</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="tocbase current">
+    
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../..">目录</a>
+  </li>
+    
+      
+  <li class="navtree toctree-l1 label">
+    <p class="caption">整体架构</p>
+  </li>
+
+
+  
+
+  
+    <li class="navtree toctree-l1 group">
+      <ul class="navtree subnav-l1 current">
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../abstract/">前言</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../framework/">基本框架</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../breakdown/">业务拆分思路</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../messageQueue/">消息队列</a>
+  </li>
+        
+          
+
+
+  
+    
+    <li class="navtree toctree-l2 page current">
+      <a class="current" href="./">
+        注册中心与部署
+          <span class="toctree-expand"></span>
+      </a>
+    </li>
+    
+      
+
+
+
+  <li class="toctree-l2 current">
+    <ul class="subnav-l2 current">
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#1">1. 注册中心</a>
+        </li>
+    
+      
+          
+
+  <li class="toctree-l3">
+    <a href="#2-k8s">
+      2. K8S
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l3">
+    <ul class="subnav-l3 toc-hidden">
+    
+      
+        <li class="toctree-l4">
+          <a class="toctree-l5" href="#21">2.1 镜像生成</a>
+        </li>
+    
+      
+        <li class="toctree-l4">
+          <a class="toctree-l5" href="#22">2.2 问题与解决</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#_2"></a>
+        </li>
+    
+    </ul>
+  </li>
+
+
+  
+        
+      </ul>
+    </li>
+    
+      
+  <li class="navtree toctree-l1 label">
+    <p class="caption">服务端文档</p>
+  </li>
+
+
+  
+
+  
+    <li class="navtree toctree-l1 group">
+      <ul class="navtree subnav-l1 current">
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/errors/">接口标准规范</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/UserService/">UserService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/ConferenceService/">ConferenceService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/InvitationService/">InvitationService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/DraftService/">DraftService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/ReviewProcessService/">ReviewProcessService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/DiscussService/">DiscussService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/NotificationService/">NotificationService</a>
+  </li>
+        
+      </ul>
+    </li>
+    
+      
+  <li class="navtree toctree-l1 label">
+    <p class="caption">前端文档</p>
+  </li>
+
+
+  
+
+  
+    <li class="navtree toctree-l1 group">
+      <ul class="navtree subnav-l1 current">
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../frontend/procedure/">操作流程</a>
+  </li>
+        
+      </ul>
+    </li>
+    
+  </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">StarChair 重构版文档 By Group 10</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>整体架构 &raquo;</li>
+        
+      
+    
+    <li>注册中心与部署</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="_1">注册中心与部署</h1>
+<h2 id="1">1. 注册中心</h2>
+<p>因为Eruka是支持Java生态的注册中心，因此在我们的项目中，我们使用了<strong>Consul</strong>作为注册中心进行服务注册与服务发现</p>
+<p><mark><strong>服务通过向注册中心发送serviceid请求来获得其他服务的端口和地址</strong></mark></p>
+<p><strong>问题与解决</strong></p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>采用consul 配置文件方式注册服务，灵活性差</p>
+</div>
+<ul>
+<li><strong>解决：</strong><u>改用python consul-client, 每个service启动后调用函数，<strong>动态注册服务</u></strong></li>
+</ul>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>服务shutdown后，仍然显示在consul界面上</p>
+</div>
+<ul>
+<li><strong>解决：</strong><u>加入<code>health check</code>机制，设置超时销毁。当服务关闭后health check url 不再可达，<strong>超时30s后自动注销。</strong></u></li>
+</ul>
+<hr />
+<h2 id="2-k8s">2. K8S</h2>
+<p>以下是我们小组的注册所用服务列表</p>
+<table>
+<thead>
+<tr>
+<th>service name</th>
+<th>port</th>
+<th>docker image</th>
+<th>username</th>
+<th>password</th>
+<th>description</th>
+<th>external IP</th>
+<th>注册中心service id</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>consul-service</td>
+<td>8500</td>
+<td>consul:1.4.4</td>
+<td></td>
+<td></td>
+<td>注册中心</td>
+<td>true</td>
+<td>consul</td>
+</tr>
+<tr>
+<td>rabbit-service</td>
+<td>5672, 15672</td>
+<td>rabbitmq:3.8-management</td>
+<td>guest</td>
+<td>guest</td>
+<td>消息队列，5672为访问端口，15672为web界面端口</td>
+<td>true</td>
+<td></td>
+</tr>
+<tr>
+<td>redis-service</td>
+<td>6379</td>
+<td>redis:latest</td>
+<td></td>
+<td></td>
+<td>session缓存</td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td>mongo-user-service</td>
+<td>27017</td>
+<td>mongo:latest</td>
+<td></td>
+<td></td>
+<td>user数据库</td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td>mongo-conference-service</td>
+<td>27017</td>
+<td>mongo:latest</td>
+<td></td>
+<td></td>
+<td>conference数据库</td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td>mongo-draft-service</td>
+<td>27017</td>
+<td>mongo:latest</td>
+<td></td>
+<td></td>
+<td>draft数据库</td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td>mongo-invitation-service</td>
+<td>27017</td>
+<td>mongo:latest</td>
+<td></td>
+<td></td>
+<td>invitation数据库</td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td>mongo-discussion-service</td>
+<td>27017</td>
+<td>mongo:latest</td>
+<td></td>
+<td></td>
+<td>discussion数据库</td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td>mongo-review-process-service</td>
+<td>27017</td>
+<td>mongo:latest</td>
+<td></td>
+<td></td>
+<td>review process数据库</td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td>mongo-notification-service</td>
+<td>27017</td>
+<td>mongo:latest</td>
+<td></td>
+<td></td>
+<td>notification数据库</td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>starchair-frontend</td>
+<td>8080:80</td>
+<td>registry.cn-hangzhou.aliyuncs.com/youngf/starchair-frontend:1.0</td>
+<td></td>
+<td></td>
+<td>前端</td>
+<td>true</td>
+<td>StarchairFrontend</td>
+</tr>
+<tr>
+<td>starchair-user-service</td>
+<td>5001</td>
+<td>registry.cn-hangzhou.aliyuncs.com/youngf/starchair-user-service:1.0</td>
+<td></td>
+<td></td>
+<td>UserService</td>
+<td>true</td>
+<td>UserService</td>
+</tr>
+<tr>
+<td>starchair-conference-service</td>
+<td>5002</td>
+<td>registry.cn-hangzhou.aliyuncs.com/youngf/starchair-conference-service:1.0</td>
+<td></td>
+<td></td>
+<td>ConferenceMetaService</td>
+<td>true</td>
+<td>ConferenceService</td>
+</tr>
+<tr>
+<td>starchair-draft-service</td>
+<td>5003</td>
+<td>registry.cn-hangzhou.aliyuncs.com/youngf/starchair-draft-service:1.0</td>
+<td></td>
+<td></td>
+<td>DraftMetaService</td>
+<td>true</td>
+<td>DraftService</td>
+</tr>
+<tr>
+<td>starchair-invitation-service</td>
+<td>5004</td>
+<td>registry.cn-hangzhou.aliyuncs.com/youngf/starchair-invitation-service:1.0</td>
+<td></td>
+<td></td>
+<td>InvitationService</td>
+<td>true</td>
+<td>InvitationService</td>
+</tr>
+<tr>
+<td>starchair-discussion-service</td>
+<td>5005</td>
+<td>registry.cn-hangzhou.aliyuncs.com/youngf/starchair-discussion-service:1.0</td>
+<td></td>
+<td></td>
+<td>DiscussionService</td>
+<td>true</td>
+<td>DiscussionService</td>
+</tr>
+<tr>
+<td>starchair-review-process-service</td>
+<td>5006</td>
+<td>registry.cn-hangzhou.aliyuncs.com/youngf/starchair-review-process-service:1.0</td>
+<td></td>
+<td></td>
+<td>ReviewProcessService</td>
+<td>true</td>
+<td>ReviewProcessService</td>
+</tr>
+<tr>
+<td>starchair-notification-service</td>
+<td>5007</td>
+<td>registry.cn-shanghai.aliyuncs.com/youngf/starchair-notification-service:1.0</td>
+<td></td>
+<td></td>
+<td>NotificationService</td>
+<td>true</td>
+<td>NotificationService</td>
+</tr>
+</tbody>
+</table>
+<h3 id="21">2.1 镜像生成</h3>
+<p>由于从dockerhub上拉取镜像过于缓慢<strong><del>（ 推也很慢）</del> </strong>，因此采取阿里云的 <mark>容器镜像服务</mark>， 将代码推送到阿里云 code，(code.aliyun.com) , 设置规则后 自动推送代码编译镜像，非常的方便，<strong>“妈妈再也不用担心我手动推镜像”</strong></p>
+<h3 id="22">2.2 问题与解决</h3>
+<h2 id="_2"></h2>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>每次都要指定namespace 很麻烦</p>
+</div>
+<ul>
+<li><strong>解决</strong>：<code>kubectl config set-context --current --namespace=ase-ns-10</code></li>
+</ul>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>按照示例，无法创建pod</p>
+</div>
+<ul>
+<li><strong>解决</strong>：<code>kubectl describe</code>命令查看pod deployment replicaset情况 发现cpu资源超限。<code>kubectl describe ns &lt;namespace&gt;</code>发现整个命名空间限制了cpu 500m memory 1Gi，于是调整了yaml资源配置。</li>
+</ul>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>前端请求路径问题</p>
+</div>
+<ul>
+<li><strong>解决</strong>： 从一开始重构这个项目，我们就已经想到了这个问题，因此对于每个服务，我们都有一个统一的前缀，比如<strong>UserService</strong>是<code>/api/user/xxx</code> ， <strong>ConferenceService</strong> 则是<code>/api/conference/xxx</code></li>
+</ul>
+<blockquote>
+<p>这样不仅在开发的时候方便配置proxyTable， 而在最后的nginx转发中也非常方便</p>
+<p><mark>同时在配置中解决了文件上传大小限制的问题</mark></p>
+</blockquote>
+<p><strong>附上nginx.conf</strong></p>
+<pre class="codehilite"><code class="linenums">map $http_upgrade $connection_upgrade {
+    default upgrade;
+    ''      close;
+  }
+
+upstream websocket {
+    #ip_hash;
+    #转发到服务器上相应的ws端口
+    server starchair-notification-service:5007;
+}
+
+server {
+    listen 80;
+    server_name localhost;
+
+    location / {
+        root /srv/dist;
+        try_files $uri $uri/ @router;
+        index  index.html;
+    }
+
+    location @router {
+        rewrite ^.*$ /index.html last;
+    }
+
+    location /docs {
+        alias /srv/docs/;
+        index index.html;
+    }
+
+     location /api/user {
+         proxy_pass http://starchair-user-service:5001;
+         add_header 'Access-Control-Allow-Origin' '*';
+         add_header 'Access-Control-Allow-Headers' '*';
+         add_header 'Access-Control-Allow-Methods' '*';
+     }
+
+     location /api/conference {
+         proxy_pass http://starchair-conference-service:5002;
+         add_header 'Access-Control-Allow-Origin' '*';
+         add_header 'Access-Control-Allow-Headers' '*';
+         add_header 'Access-Control-Allow-Methods' '*';
+     }
+     location /api/draft {
+         proxy_pass http://starchair-draft-service:5003;
+         add_header 'Access-Control-Allow-Origin' '*';
+         add_header 'Access-Control-Allow-Headers' '*';
+         add_header 'Access-Control-Allow-Methods' '*';
+        client_max_body_size 20m;
+     }
+
+     location /api/invitation {
+         proxy_pass http://starchair-invitation-service:5004;
+         add_header 'Access-Control-Allow-Origin' '*';
+         add_header 'Access-Control-Allow-Headers' '*';
+         add_header 'Access-Control-Allow-Methods' '*';
+     }
+     location /api/discuss {
+         proxy_pass http://starchair-discussion-service:5005;
+         add_header 'Access-Control-Allow-Origin' '*';
+         add_header 'Access-Control-Allow-Headers' '*';
+         add_header 'Access-Control-Allow-Methods' '*';
+     }
+     location /api/reviewProcess {
+         proxy_pass http://starchair-review-process-service:5006;
+         add_header 'Access-Control-Allow-Origin' '*';
+         add_header 'Access-Control-Allow-Headers' '*';
+         add_header 'Access-Control-Allow-Methods' '*';
+     }
+    location /api/notification {
+        proxy_pass http://starchair-notification-service:5007;
+        add_header 'Access-Control-Allow-Origin' '*';
+        add_header 'Access-Control-Allow-Headers' '*';
+        add_header 'Access-Control-Allow-Methods' '*';
+    }
+
+    location /ws{
+        proxy_pass http://websocket;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        #升级http1.1到 websocket协议
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection  $connection_upgrade;
+    }
+
+}
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../API/errors/" class="btn btn-neutral float-right" title="接口标准规范">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../messageQueue/" class="btn btn-neutral" title="消息队列"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>2020 StarChair | fduxuan with Group 10 All Right Reserved</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../messageQueue/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../../API/errors/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+
+</body>
+</html>
