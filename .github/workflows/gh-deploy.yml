@@ -17,4 +17,4 @@ jobs:
       - run: pip install mkdocs
       - run: pip install mkdocs-material
       - run: pip install mkdocs-blogging-plugin  # 记得安装其他依赖的库
-      - run: mkdocs gh-deploy --force
+      - run: mkdocs gh-deploy --force --config-file ../AdvancedSE-2020-Autumn/Document/mkdocs.yml
