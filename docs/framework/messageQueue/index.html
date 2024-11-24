@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="fduxuan">
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>消息队列 - StarChair 重构版文档 By Group 10</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../../css/extra.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "\u6d88\u606f\u961f\u5217";
+    var mkdocs_page_input_path = "framework/messageQueue.md";
+    var mkdocs_page_url = "/docs/framework/messageQueue/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> StarChair 重构版文档 By Group 10</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="tocbase current">
+    
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../..">目录</a>
+  </li>
+    
+      
+  <li class="navtree toctree-l1 label">
+    <p class="caption">整体架构</p>
+  </li>
+
+
+  
+
+  
+    <li class="navtree toctree-l1 group">
+      <ul class="navtree subnav-l1 current">
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../abstract/">前言</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../framework/">基本框架</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../breakdown/">业务拆分思路</a>
+  </li>
+        
+          
+
+
+  
+    
+    <li class="navtree toctree-l2 page current">
+      <a class="current" href="./">
+        消息队列
+          <span class="toctree-expand"></span>
+      </a>
+    </li>
+    
+      
+
+
+
+  <li class="toctree-l2 current">
+    <ul class="subnav-l2 current">
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#1">1. 整体思路</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#2">2. 遇到的问题</a>
+        </li>
+    
+    </ul>
+  </li>
+
+
+  
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../deploy/">注册中心与部署</a>
+  </li>
+        
+      </ul>
+    </li>
+    
+      
+  <li class="navtree toctree-l1 label">
+    <p class="caption">服务端文档</p>
+  </li>
+
+
+  
+
+  
+    <li class="navtree toctree-l1 group">
+      <ul class="navtree subnav-l1 current">
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/errors/">接口标准规范</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/UserService/">UserService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/ConferenceService/">ConferenceService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/InvitationService/">InvitationService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/DraftService/">DraftService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/ReviewProcessService/">ReviewProcessService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/DiscussService/">DiscussService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/NotificationService/">NotificationService</a>
+  </li>
+        
+      </ul>
+    </li>
+    
+      
+  <li class="navtree toctree-l1 label">
+    <p class="caption">前端文档</p>
+  </li>
+
+
+  
+
+  
+    <li class="navtree toctree-l1 group">
+      <ul class="navtree subnav-l1 current">
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../frontend/procedure/">操作流程</a>
+  </li>
+        
+      </ul>
+    </li>
+    
+  </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">StarChair 重构版文档 By Group 10</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>整体架构 &raquo;</li>
+        
+      
+    
+    <li>消息队列</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="_1">消息队列</h1>
+<h2 id="1">1. 整体思路</h2>
+<ul>
+<li>以<code>user id</code>为队列名，给每个用户分配一个消息队列。</li>
+<li>系统给特定用户发送消息时，将消息<strong>存入该用户对应的消息队列</strong>，同时<strong>存入数据库用于消息持久化</strong>。</li>
+<li>用户登录时，新建<code>websocket</code>连接，并<strong>新建一个消费者</strong>，在消费者接收到消息的回调函数中通过<code>websocket</code>向前端推送消息。</li>
+<li>用户退出登录时，关闭<code>websocket</code>连接，并<strong>删除消费者</strong>。由此可以 <mark>实现用户在线时消息的实时推送，用户离线时的消息阻塞</mark> 。</li>
+</ul>
+<hr />
+<h2 id="2">2. 遇到的问题</h2>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>python版本的rabbitmq client为pika库，消费者开启监听后阻塞执行</p>
+</div>
+<ul>
+<li><strong>解决：</strong><u>给每个消费者开启一个新的线程</u></li>
+</ul>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>pika是线程不安全的, 尤其是pika所操作的连接与信道不支持多个消费者(线程)共享.</p>
+</div>
+<ul>
+<li><strong>解决：</strong><u>只能为每个消费者(线程)单独分配一个连接和一个信道.</u></li>
+</ul>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>无法显式操作每个消费者线程，无法直接删除消费者</p>
+</div>
+<ul>
+<li><strong>解决：</strong><u>试图删除消费者时，由生产者向消息队列<strong>放入特定quit信号</strong>，在消费者接收到消息的回调函数中判断，收到quit信号则停止监听，清理连接和信道.</u></li>
+</ul>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>运行一段时间后，pika会丢失与RabbitMQ的连接</p>
+</div>
+<ul>
+<li><strong>解决：</strong><u>关闭rabbitmq的心跳超时检测机制。发送消息时如连接断开，加入<strong>重发机制</strong>。</u></li>
+</ul>
+<hr />
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>尚未解决的问题。目前如果同时开启多个网页登录，就会形成多个web socket连接，对应多个消费者，由于消息只能被消费一次，就只有一个网页能收到web socket消息。</p>
+</div>
+<ul>
+<li><strong>难点：</strong>理想状态是 <mark>一个队列只有一个消费者</mark> ，接收到消息时推送到所有与它绑定的<code>web-socket-client</code>。但由于目前是在新建消费者线程时传入对应的<code>web-socket-client</code>，绑定到接收消息的回调函数中，而一旦线程开启，<strong>无法更新该回调函数</strong>，导致以上理想状态不可能实现。</li>
+<li><strong>预想方案：</strong>以<code>user_id</code>为交换机名，每次登录时新建绑定到交换机的<strong>匿名队列</strong>、<strong>消费者</strong>和<strong>websocket client</strong>。<u>向交换机发送消息</u>，那么每个队列即可分别消费，不会互相影响。</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../deploy/" class="btn btn-neutral float-right" title="注册中心与部署">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../breakdown/" class="btn btn-neutral" title="业务拆分思路"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>2020 StarChair | fduxuan with Group 10 All Right Reserved</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../breakdown/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../deploy/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+
+</body>
+</html>

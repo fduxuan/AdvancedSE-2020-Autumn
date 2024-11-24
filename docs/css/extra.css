@@ -1,0 +1,26 @@
+
+.codehilite .linenums {
+    background: #f3f3f3;
+    padding: 2% 3%;
+    white-space: pre;
+    font-size: 14px;
+    color: #000
+}
+
+.admonition{
+    font-weight: bold;
+}
+
+.rst-content tt, .rst-content tt, .rst-content code {
+    color: crimson;
+    font-size: 14px;
+    padding: 2px 5px
+}
+.wy-table td, .rst-content table.docutils td, .rst-content table.field-list td, .wy-table th, .rst-content table.docutils th, .rst-content table.field-list th{
+    font-size: 100%;
+
+}
+
+.wy-plain-list-disc li, .rst-content .section ul li, .rst-content .toctree-wrapper ul li, article ul li {
+    margin-bottom: 12px;
+}

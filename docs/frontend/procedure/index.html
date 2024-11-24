@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="fduxuan">
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>操作流程 - StarChair 重构版文档 By Group 10</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../../css/extra.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "\u64cd\u4f5c\u6d41\u7a0b";
+    var mkdocs_page_input_path = "frontend/procedure.md";
+    var mkdocs_page_url = "/docs/frontend/procedure/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> StarChair 重构版文档 By Group 10</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="tocbase current">
+    
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="../..">目录</a>
+  </li>
+    
+      
+  <li class="navtree toctree-l1 label">
+    <p class="caption">整体架构</p>
+  </li>
+
+
+  
+
+  
+    <li class="navtree toctree-l1 group">
+      <ul class="navtree subnav-l1 current">
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../framework/abstract/">前言</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../framework/framework/">基本框架</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../framework/breakdown/">业务拆分思路</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../framework/messageQueue/">消息队列</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../framework/deploy/">注册中心与部署</a>
+  </li>
+        
+      </ul>
+    </li>
+    
+      
+  <li class="navtree toctree-l1 label">
+    <p class="caption">服务端文档</p>
+  </li>
+
+
+  
+
+  
+    <li class="navtree toctree-l1 group">
+      <ul class="navtree subnav-l1 current">
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/errors/">接口标准规范</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/UserService/">UserService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/ConferenceService/">ConferenceService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/InvitationService/">InvitationService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/DraftService/">DraftService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/ReviewProcessService/">ReviewProcessService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/DiscussService/">DiscussService</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../../API/NotificationService/">NotificationService</a>
+  </li>
+        
+      </ul>
+    </li>
+    
+      
+  <li class="navtree toctree-l1 label">
+    <p class="caption">前端文档</p>
+  </li>
+
+
+  
+
+  
+    <li class="navtree toctree-l1 group">
+      <ul class="navtree subnav-l1 current">
+          
+
+
+  
+    
+    <li class="navtree toctree-l2 page current">
+      <a class="current" href="./">
+        操作流程
+          <span class="toctree-expand"></span>
+      </a>
+    </li>
+    
+      
+
+
+
+  <li class="toctree-l2 current">
+    <ul class="subnav-l2 current">
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#1">1. 主界面</a>
+        </li>
+    
+      
+          
+
+  <li class="toctree-l3">
+    <a href="#2">
+      2. 会议界面
+      <span class="toctree-expand"></span>
+    </a>
+  </li>
+
+
+
+  <li class="toctree-l3">
+    <ul class="subnav-l3 toc-hidden">
+    
+      
+        <li class="toctree-l4">
+          <a class="toctree-l5" href="#21">2.1. 已有会议</a>
+        </li>
+    
+      
+        <li class="toctree-l4">
+          <a class="toctree-l5" href="#22">2.2. 新建会议</a>
+        </li>
+    
+    </ul>
+  </li>
+
+      
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#3">3. 管理员页面</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#4">4. 审稿</a>
+        </li>
+    
+      
+        <li class="toctree-l3">
+          <a class="toctree-l4" href="#5">5. 邮箱页面</a>
+        </li>
+    
+    </ul>
+  </li>
+
+
+  
+        
+      </ul>
+    </li>
+    
+  </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">StarChair 重构版文档 By Group 10</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>前端文档 &raquo;</li>
+        
+      
+    
+    <li>操作流程</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="_1">操作流程</h1>
+<h2 id="1">1. 主界面</h2>
+<p>主界面如下图所示：</p>
+<p><img alt="homepage" src="../homepage.png" /></p>
+<p>在未登陆的情况下点击"GET STARTED"会提示"please login first"，点击右上角的"Sign In/Sign UP"进行登录或注册。</p>
+<p>下图为登录界面：</p>
+<p><img alt="signin" src="../signin.png" /></p>
+<p>而下图为注册界面：</p>
+<p><img alt="signup" src="../signup.png" /></p>
+<p>注册界面如果输入不规范会提示：</p>
+<p><img alt="signuperror" src="../signuperror.png" /></p>
+<p>注册成功后进行登录，登录成功后的界面如下图所示：</p>
+<p><img alt="homepagesuccess" src="../homepagesuccess.png" /></p>
+<p>点击"GET STARTED"或右上角的"Conference"即可进入会议界面。</p>
+<h2 id="2">2. 会议界面</h2>
+<p>会议界面如下图所示：</p>
+<p><img alt="conferencepage" src="../conferencepage.png" /></p>
+<h3 id="21">2.1. 已有会议</h3>
+<p>左上可以根据会议状态对会议进行筛选，也可以筛选出只和自己有关的会议。</p>
+<p>右上可以根据名字搜索会议。</p>
+<p>点击"More Info"可以查看详细信息：</p>
+<p><img alt="moreinfo" src="../moreinfo.png" /></p>
+<p>对于正在投稿状态的会议，点击“我的稿件”开启投稿界面</p>
+<p><img alt="upload" src="../upload.png" /></p>
+<p>点击上方+号，填写信息并上传稿件：</p>
+<p><img alt="submit" src="../submit.png" /></p>
+<h3 id="22">2.2. 新建会议</h3>
+<p>在会议界面，点击上方+号创建会议：</p>
+<p><img alt="newconference" src="../newconference.png" /></p>
+<p>填写所需信息后，会议将提交给管理员进行审核。</p>
+<h2 id="3">3. 管理员页面</h2>
+<p>在管理员页面，可以看到申请的会议信息：</p>
+<p><img alt="admin" src="../admin.png" /></p>
+<p>点击每个会议右上的按钮可以查看详细信息，点击下方按钮选择通过或拒绝。</p>
+<h2 id="4">4. 审稿</h2>
+<p>对于自己的会议，会议的详细信息与其他的不同：</p>
+<p><img alt="moreinfodetail" src="../moreinfodetail.png" /></p>
+<p>在邀请审稿人界面，可以查询并邀请成员来审稿。</p>
+<p>在改变会议状态界面，可以让会议进入下一步：</p>
+<p><img alt="status" src="../status.png" /></p>
+<p>点击start submiting开启投稿。此时审稿人必须至少有三个。</p>
+<p>接下来，点击Close Submission &amp; Start Reviewing按钮关闭投稿渠道并开启审稿：</p>
+<p><img alt="status2" src="../status2.png" /></p>
+<p>此后，在审稿界面开始审稿：</p>
+<p><img alt="review" src="../review.png" /></p>
+<p>点击preview查看稿件：</p>
+<p><img alt="preview" src="../preview.png" /></p>
+<p>点击score进行评价：</p>
+<p><img alt="score" src="../score.png" /></p>
+<p>打分完毕后，在改变会议状态界面点击Start First Discussion开始讨论：</p>
+<p><img alt="status3" src="../status3.png" /></p>
+<p>此时在审稿界面出现Discussion按钮，点击进入讨论，可以发表评论或者回复其他人的评论：</p>
+<p><img alt="review2" src="../review2.png" /></p>
+<p><img alt="discussion" src="../discussion.png" /></p>
+<p>在改变会议状态界面点击按钮，发表初审结果：</p>
+<p><img alt="status4" src="../status4.png" /></p>
+<p>此时提交论文的成员可以在“我的稿件”页面点击View Score查看结果，或者点击Rebuttal发表反驳：</p>
+<p><img alt="viewscore" src="../viewscore.png" /></p>
+<p><img alt="rebuttal" src="../rebuttal.png" /></p>
+<p>随后pc在改变会议状态界面点击按钮，进行终审并回应反驳，此时可以重新打分并评论：</p>
+<p><img alt="status5" src="../status5.png" /></p>
+<p>之后点击按钮，发表终审结果：</p>
+<p><img alt="status6" src="../status6.png" /></p>
+<h2 id="5">5. 邮箱页面</h2>
+<p>点击上方信息栏的铃铛按钮，可以进入邮箱页面。页面分为3部分：</p>
+<p>系统通知：包含新会议的申请或拒绝结果，邀请结果，提交稿件情况等等。可以点击按钮标注为read或unread。</p>
+<p><img alt="message" src="../message.png" /></p>
+<p>收到邀请：收到的会议审稿邀请。可以点击按钮选择同意或拒绝。</p>
+<p><img alt="message2" src="../message2.png" /></p>
+<p>发送邀请：发送的会议审稿邀请。可以查看对方是否同意邀请。</p>
+<p><img alt="message3" src="../message3.png" /></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../../API/NotificationService/" class="btn btn-neutral" title="NotificationService"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>2020 StarChair | fduxuan with Group 10 All Right Reserved</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../../API/NotificationService/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+
+</body>
+</html>
